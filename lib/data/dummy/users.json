@@ -1,0 +1,68 @@
+[
+  {
+    "id": "usr_001",
+    "email": "admin@rentory.com",
+    "password": "admin123",
+    "nama": "Admin Rentory",
+    "no_hp": "08111111111",
+    "role": "admin",
+    "is_verified": true,
+    "status": "aktif",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "usr_002",
+    "email": "budi@toko.com",
+    "password": "budi123",
+    "nama": "Budi Santoso",
+    "no_hp": "081234567890",
+    "role": "pengusaha",
+    "is_verified": true,
+    "status": "aktif",
+    "created_at": "2024-01-15T08:00:00Z"
+  },
+  {
+    "id": "usr_003",
+    "email": "siti@toko.com",
+    "password": "siti123",
+    "nama": "Siti Rahayu",
+    "no_hp": "082198765432",
+    "role": "pengusaha",
+    "is_verified": true,
+    "status": "aktif",
+    "created_at": "2024-02-20T10:30:00Z"
+  },
+  {
+    "id": "usr_004",
+    "email": "andi@sewa.com",
+    "password": "andi123",
+    "nama": "Andi Wijaya",
+    "no_hp": "081345678901",
+    "role": "penyewa",
+    "is_verified": true,
+    "status": "aktif",
+    "created_at": "2024-03-01T09:00:00Z"
+  },
+  {
+    "id": "usr_005",
+    "email": "ratna@toko.com",
+    "password": "ratna123",
+    "nama": "Ratna Dewi",
+    "no_hp": "081456789012",
+    "role": "pengusaha",
+    "is_verified": false,
+    "status": "menunggu_verifikasi",
+    "created_at": "2024-03-15T14:00:00Z"
+  },
+  {
+    "id": "usr_006",
+    "email": "doni@sewa.com",
+    "password": "doni123",
+    "nama": "Doni Pratama",
+    "no_hp": "081567890123",
+    "role": "penyewa",
+    "is_verified": true,
+    "status": "aktif",
+    "created_at": "2024-04-01T11:00:00Z"
+  }
+]
