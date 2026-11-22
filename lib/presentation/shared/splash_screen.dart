@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
+import '../../core/auth/auth_state.dart';
+import '../../data/models/user.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -35,12 +37,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
   }
 
   Future<void> _navigate() async {
-    await Future.delayed(const Duration(seconds: 3));
+    // Animasi splash & pengecekan token (SharedPreferences → /auth/me) berjalan paralel.
+    final results = await Future.wait<Object?>([
+      Future<void>.delayed(const Duration(seconds: 3)),
+      ref.read(authStateProvider.notifier).restoreSession(),
+    ]);
     if (!mounted) return;
-    
-    // Check if user is logged in (from local storage)
-    // For now, just go to login
-    context.go('/auth/login');
+
+    // Token masih berlaku → langsung ke halaman sesuai role, tanpa login ulang.
+    final user = results[1] as User?;
+    context.go(user == null ? '/auth/login' : homePathFor(user));
   }
 
   @override

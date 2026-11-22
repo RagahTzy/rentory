@@ -1,5 +1,6 @@
 // lib/presentation/vendor/vendor_pending_screen.dart
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorPendingScreen extends StatelessWidget {
@@ -8,7 +9,16 @@ class VendorPendingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Verifikasi Toko')),
+      appBar: AppBar(
+        title: const Text('Verifikasi Toko'),
+        actions: [
+          IconButton(
+            icon: const Icon(AppIcons.user),
+            tooltip: 'Profil',
+            onPressed: () => context.push('/profile'),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),

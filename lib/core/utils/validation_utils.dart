@@ -45,6 +45,14 @@ String? validatePrice(String? value) {
   return null;
 }
 
+/// Validate harga desimal (mis. harga USD di DummyJSON: 9.99)
+String? validateDecimalPrice(String? value) {
+  if (value == null || value.trim().isEmpty) return 'Harga wajib diisi';
+  final numVal = num.tryParse(value.trim().replaceAll(',', '.'));
+  if (numVal == null || numVal <= 0) return 'Harga harus angka positif';
+  return null;
+}
+
 /// Validate stock
 String? validateStock(String? value) {
   if (value == null || value.isEmpty) return 'Stok wajib diisi';

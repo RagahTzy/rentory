@@ -1,7 +1,7 @@
 # Rentory v2: Marketplace Sewa Barang — Full Design Document
 
-> **Status**: Ready for review  
-> **Last Updated**: 2025-11-22  
+> **Status**: Ready for review
+> **Last Updated**: 2025-11-22
 > **Project**: `rentory` (Flutter + Dummy JSON for Products & Auth only)
 
 ---
@@ -20,8 +20,8 @@
 
 ### Aturan Emas (Non-Negotiable)
 
-> **Semua data barang, transaksi, dan penyewa-per-toko HARUS punya `vendor_id`.**  
-> Pengusaha A **tidak boleh** bisa melihat atau mengedit data Pengusaha B.  
+> **Semua data barang, transaksi, dan penyewa-per-toko HARUS punya `vendor_id`.**
+> Pengusaha A **tidak boleh** bisa melihat atau mengedit data Pengusaha B.
 > Pengecekan ini **dijalankan di backend / service layer** (bukan cuma UI).
 
 ---
@@ -210,7 +210,7 @@
 ```
 
 ### Satu Akun, Dua Peran
-> User bisa punya **profil penyewa + profil toko** dalam 1 akun, dengan **switch mode** di UI.  
+> User bisa punya **profil penyewa + profil toko** dalam 1 akun, dengan **switch mode** di UI.
 > Lebih praktis daripada membuat 2 akun terpisah.
 
 ---
@@ -313,7 +313,7 @@ rentals 1──1 reviews
 items 1──N maintenances
 ```
 
-> **Penting**: Hampir semua query sisi pengusaha **WAJIB** difilter `WHERE vendor_id = <toko milik user login>`.  
+> **Penting**: Hampir semua query sisi pengusaha **WAJIB** difilter `WHERE vendor_id = <toko milik user login>`.
 > Ini di-enforce di **service layer / repository**, bukan cuma UI.
 
 ---
@@ -330,8 +330,8 @@ items 1──N maintenances
 | 6 | **Pengambilan Barang** | 2 opsi: `ambil_di_toko` (wajib) + `diantar` (opsional) | Fleksibel, realistis |
 | 7 | **Biaya Antar** | Per km + radius maksimal (set per toko) | Realistis, simple calculation |
 | 8 | **Backend** | **Dummy JSON hanya untuk Products & Auth** | Requirement user; sisanya mock lokal |
-| 9 | **Auth Data** | `users.json` → login, register, role, profil | Single source of truth untuk user |
-| 10 | **Products Data** | `products.json` + `categories.json` → katalog, search, detail | Single source of truth untuk barang |
+| 9 | **Auth Data** | API DummyJSON `/auth/login` + `/auth/me` → login, role, profil (registrasi ditiadakan) | Single source of truth untuk user *(diubah: dulu users.json)* |
+| 10 | **Products Data** | API DummyJSON `/auth/products` + `/auth/products/categories` → katalog, search, detail; data sewa tambahan di `rental_catalog.dart` | Single source of truth untuk barang *(diubah: dulu products.json)* |
 | 11 | **Vendor/Booking/Rental/Chat/dll** | **Mock lokal (in-memory/state)** | Bisa pakai Riverpod/Provider/BLoC, persist ke local storage (shared_preferences/hive) kalau perlu |
 | 12 | **Peta Visual (Future)** | OpenStreetMap + MapLibre GL (gratis, no API key) | Kalau nanti mau tampilkan pin toko & routing |
 
@@ -435,8 +435,8 @@ lib/
 | **6** | **Interaksi** | Review & Rating, Chat (basic), Notifikasi, Wishlist | 2-3 hari |
 | **7** | **Dashboard & Pelengkap** | Vendor Dashboard (ringkasan, laporan, export), Maintenance, Admin Panel (verifikasi, moderasi, sengketa, kategori) | 3-4 hari |
 
-> **Total estimasi**: ~20-28 hari kerja  
-> **MVP Solid (Tahap 0-4)**: ~13-18 hari — sudah bisa demo full flow sewa  
+> **Total estimasi**: ~20-28 hari kerja
+> **MVP Solid (Tahap 0-4)**: ~13-18 hari — sudah bisa demo full flow sewa
 > **Tahap 5-7**: Polish & fitur lengkap
 
 ---

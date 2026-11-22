@@ -43,6 +43,7 @@ dependencies:
   # Flutter 3.47 (IconData sekarang final class).
   phosphor_flutter: ^2.1.0
   cupertino_icons: ^2.0.0
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
@@ -56,8 +57,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/logos/
-    - assets/products/
-    - assets/images/
-    - lib/data/dummy/

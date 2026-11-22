@@ -1,19 +1,22 @@
 // lib/presentation/booking/booking_create_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/format_utils.dart';
+import '../../data/models/product.dart';
 import '../../data/services/product_service.dart';
+import '../shared/product_image.dart';
 
-class BookingCreateScreen extends StatefulWidget {
+class BookingCreateScreen extends ConsumerStatefulWidget {
   final String productId;
   const BookingCreateScreen({super.key, required this.productId});
 
   @override
-  State<BookingCreateScreen> createState() => _BookingCreateScreenState();
+  ConsumerState<BookingCreateScreen> createState() => _BookingCreateScreenState();
 }
 
-class _BookingCreateScreenState extends State<BookingCreateScreen> {
+class _BookingCreateScreenState extends ConsumerState<BookingCreateScreen> {
   final _formKey = GlobalKey<FormState>();
   DateTime? _startDate;
   DateTime? _endDate;
@@ -23,11 +26,18 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final product = ProductService.getProductById(widget.productId);
-    if (product == null) {
-      return Scaffold(appBar: AppBar(title: const Text('Produk Tidak Ditemukan')));
-    }
+    final provider = productDetailProvider(widget.productId);
+    return ref.watch(provider).when(
+          loading: () => Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator())),
+          error: (e, _) => Scaffold(
+            appBar: AppBar(title: const Text('Buat Booking')),
+            body: ApiErrorView(error: e, onRetry: () => ref.invalidate(provider)),
+          ),
+          data: _buildForm,
+        );
+  }
 
+  Widget _buildForm(Product product) {
     final days = _startDate != null && _endDate != null ? _endDate!.difference(_startDate!).inDays + 1 : 1;
     final subtotal = product.hargaPerHari * _qty * days;
     final deposit = (subtotal * 30 / 100).round(); // 30% default
@@ -44,13 +54,9 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
               // Product Summary
               Card(
                 child: ListTile(
-                  leading: Container(
-                    width: 60,
-                    height: 60,
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                    child: product.foto.isNotEmpty
-                        ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.package))
-                        : Icon(AppIcons.package),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: SizedBox(width: 60, height: 60, child: ProductImage.of(product, iconSize: 24)),
                   ),
                   title: Text(product.nama, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   subtitle: Text('${formatCurrency(product.hargaPerHari)}/hari'),

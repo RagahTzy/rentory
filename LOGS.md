@@ -85,6 +85,24 @@ flutter pub run build_runner build --delete-conflicting-outputs  # Success
 
 ---
 
+## 2026-11-23 — CRUD API, Authentication DummyJSON & SharedPreferences
+
+| Phase | Task | Description | Status |
+|-------|------|-------------|--------|
+| 4 | HTTP client | + `http`; `ApiClient` (GET/POST/PUT/DELETE, decode JSON, `ApiException`, Bearer token otomatis dari SharedPreferences, auto-refresh saat 401). + izin `INTERNET` di AndroidManifest | ✅ Done |
+| 4 | Auth DummyJSON | Login pakai username/password → `POST /auth/login`; profil via `GET /auth/me` (Bearer). Role API dipetakan: admin→admin, moderator→pengusaha, user→penyewa | ✅ Done |
+| 4 | Token storage | `TokenStorage` (SharedPreferences): simpan access/refresh token saat login, dibaca di tiap request, dihapus saat logout. Splash memulihkan sesi (cek `exp` JWT → refresh → `/auth/me`) sehingga tidak perlu login ulang | ✅ Done |
+| 4 | Profile & Logout | `ProfileScreen` menampilkan data `/auth/me` (foto, nama, email, HP, alamat, pekerjaan), pull-to-refresh, logout dengan konfirmasi. Tombol Profil ditambahkan di dashboard vendor/admin/pending | ✅ Done |
+| 4 | CRUD Produk | `/api-products` (`ApiProductsScreen`): GET list + search + paginasi, POST tambah, PUT edit, DELETE hapus ke `/auth/products` (wajib token) | ✅ Done |
+| 4 | Hapus registrasi | `RegisterScreen`, `RoleSelectScreen`, `VendorRegisterScreen`, route-nya, tombol "Daftar" & `AuthService.register` dihapus — DummyJSON tidak bisa membuat akun yang bisa login, jadi semua akun berasal dari DummyJSON | ✅ Done |
+| 4 | Tautan akun → toko | `AuthService.dummyJsonAccountLinks`: akun DummyJSON ditautkan ke user lokal (emilys→usr_001, oliviaw→usr_002/vnd_001, alexanderj→usr_003/vnd_002, avat→usr_005/vnd_003 pending, averyp→usr_004). Identitas dari API; role, status & toko (rekening, lokasi) dari data lokal. Akun tanpa tautan: admin→admin, lainnya→penyewa. Kartu "Data Toko" di Profil | ✅ Done |
+| 4 | Login pakai email | `/auth/login` DummyJSON hanya menerima username → email dicari dulu via `GET /users/filter?key=email`, lalu login dengan username-nya. Field Login = Email (validateEmail) | ✅ Done |
+| 4 | Auth & Products murni API | Hapus `users.json`, `products.json`, `categories.json` (+ folder `lib/data/dummy`). Beranda/Cari/Detail/Booking pakai `catalogProvider` → `GET /auth/products` & `/auth/products/categories`. Tambahan sewa di `rental_catalog.dart` (kategori→toko, tarif Rp/hari = 1% harga × Rp16.000, aturan). Role: admin API → admin, pemilik toko → pengusaha, lainnya → penyewa | ✅ Done |
+| 4 | Hapus file tak terpakai | 9 mock (booking, rental, payment, review, chat, notification, dispute, blacklist, vendor_document), model `booking.dart` & `others.dart`, folder `assets/` (isinya hanya .gitkeep), `data_loading_test.dart` | ✅ Done |
+| - | Tests | `api_auth_crud_test.dart` (MockClient: login, token, restore/refresh/expired, logout, CRUD) & `api_screens_test.dart` (Profil + CRUD di 360x740) | ✅ 34 passed |
+
+---
+
 ## 2026-11-23 — Fix build & runtime (Flutter 3.47.5 / Dart 3.13)
 
 | Phase | Task | Description | Status |

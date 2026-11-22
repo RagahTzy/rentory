@@ -8,6 +8,7 @@ import '../../core/utils/location_utils.dart';
 import '../../data/models/product.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
+import '../shared/product_image.dart';
 
 class ProductSearchScreen extends ConsumerStatefulWidget {
   const ProductSearchScreen({super.key});
@@ -19,15 +20,16 @@ class ProductSearchScreen extends ConsumerStatefulWidget {
 class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
   final _searchController = TextEditingController();
   String _query = '';
-  String _selectedCategory = 'Semua';
+  /// Slug kategori DummyJSON; null = semua.
+  String? _selectedCategory;
+  static const int _priceCeiling = 10000000;
   int _minPrice = 0;
-  int _maxPrice = 5000000;
+  int _maxPrice = _priceCeiling;
   String _sortBy = 'rating';
   double _radiusKm = 10;
-  final List<String> _categories = ['Semua', 'Kamera & Video', 'Outdoor & Camping', 'Elektronik', 'Fashion', 'Alat Bangun', 'Kendaraan'];
   final List<String> _sortOptions = ['Rating Tertinggi', 'Harga Termurah', 'Harga Termahal', 'Terdekat'];
   final List<String> _sortValues = ['rating', 'harga_asc', 'harga_desc', 'jarak'];
-  
+
   // Mock user location
   final double _userLat = -6.9175;
   final double _userLng = 107.6191;
@@ -38,34 +40,26 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     super.dispose();
   }
 
-  List<Product> _getFilteredProducts() {
-    var products = ProductService.getAvailableProducts();
-    
-    // Search query
-    // (dulu memanggil searchProducts() yang menimpa filter "tersedia")
+  /// Filter & urutkan katalog API (yang sudah dimuat) di sisi client.
+  List<Product> _getFilteredProducts(Catalog catalog) {
+    var products = catalog.available;
+
+    // Search query (nama & deskripsi dari API)
     if (_query.isNotEmpty) {
-      final matchIds = ProductService.searchProducts(_query).map((p) => p.id).toSet();
-      products = products.where((p) => matchIds.contains(p.id)).toList();
+      final q = _query.toLowerCase();
+      products = products
+          .where((p) => p.nama.toLowerCase().contains(q) || p.deskripsi.toLowerCase().contains(q))
+          .toList();
     }
-    
+
     // Category filter
-    if (_selectedCategory != 'Semua') {
-      final catMap = {
-        'Kamera & Video': 'cat_001',
-        'Outdoor & Camping': 'cat_002',
-        'Elektronik': 'cat_003',
-        'Fashion': 'cat_004',
-        'Alat Bangun': 'cat_005',
-        'Kendaraan': 'cat_006',
-      };
-      if (catMap[_selectedCategory] != null) {
-        products = products.where((p) => p.categoryId == catMap[_selectedCategory]).toList();
-      }
+    if (_selectedCategory != null) {
+      products = products.where((p) => p.categoryId == _selectedCategory).toList();
     }
-    
+
     // Price filter
     products = products.where((p) => p.hargaPerHari >= _minPrice && p.hargaPerHari <= _maxPrice).toList();
-    
+
     // Sort
     switch (_sortBy) {
       case 'rating':
@@ -93,10 +87,18 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     return haversineKm(_userLat, _userLng, vendor.latitude, vendor.longitude);
   }
 
+  String _categoryLabel(Catalog? catalog) {
+    if (_selectedCategory == null) return 'Semua';
+    for (final c in catalog?.categories ?? const <Category>[]) {
+      if (c.id == _selectedCategory) return c.nama;
+    }
+    return 'Semua';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final products = _getFilteredProducts();
-    
+    final catalog = ref.watch(catalogProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cari Barang'),
@@ -136,9 +138,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             child: Row(
               children: [
                 _FilterChip(
-                  label: _selectedCategory,
+                  label: _categoryLabel(catalog.value),
                   icon: AppIcons.funnel,
-                  onTap: _showCategoryFilter,
+                  onTap: () => _showCategoryFilter(catalog.value?.categories ?? const []),
                 ),
                 const SizedBox(width: 8),
                 _FilterChip(
@@ -155,22 +157,28 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               ],
             ),
           ),
-          
+
           // Results
           Expanded(
-            child: products.isEmpty
-                ? _buildEmptyState()
-                : GridView.builder(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.72,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) => _buildProductCard(products[index]),
+            child: catalog.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => ApiErrorView(error: e, onRetry: () => ref.invalidate(catalogProvider)),
+              data: (data) {
+                final products = _getFilteredProducts(data);
+                if (products.isEmpty) return _buildEmptyState();
+                return GridView.builder(
+                  padding: const EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.72,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
                   ),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) => _buildProductCard(products[index]),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -188,12 +196,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
           children: [
             AspectRatio(
               aspectRatio: 16/10,
-              child: Container(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                child: product.foto.isNotEmpty
-                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.image, size: 32, color: Colors.grey))
-                    : Icon(AppIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
-              ),
+              child: ProductImage.of(product),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -246,7 +249,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     );
   }
 
-  void _showCategoryFilter() {
+  void _showCategoryFilter(List<Category> categories) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
@@ -261,11 +264,17 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: _categories.map((cat) => FilterChip(
-                label: Text(cat),
-                selected: _selectedCategory == cat,
-                onSelected: (_) => setState(() { _selectedCategory = cat; Navigator.pop(context); }),
-              )).toList(),
+              children: [
+                for (final cat in <Category?>[null, ...categories])
+                  FilterChip(
+                    label: Text(cat?.nama ?? 'Semua'),
+                    selected: _selectedCategory == cat?.id,
+                    onSelected: (_) => setState(() {
+                      _selectedCategory = cat?.id;
+                      Navigator.pop(context);
+                    }),
+                  ),
+              ],
             ),
           ],
         ),
@@ -287,8 +296,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             RangeSlider(
               values: RangeValues(_minPrice.toDouble(), _maxPrice.toDouble()),
               min: 0,
-              max: 5000000,
-              divisions: 50,
+              max: _priceCeiling.toDouble(),
+              divisions: 100,
               labels: RangeLabels(formatCurrencyShort(_minPrice), formatCurrencyShort(_maxPrice)),
               onChanged: (v) => setState(() { _minPrice = v.start.round(); _maxPrice = v.end.round(); }),
             ),

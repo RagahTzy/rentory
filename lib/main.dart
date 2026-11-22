@@ -5,8 +5,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'core/theme/app_theme.dart';
 import 'core/routing/app_router.dart';
-import 'data/services/auth_service.dart';
-import 'data/services/product_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,10 +16,7 @@ void main() async {
     // Initialize date formatting (Indonesian locale)
     await initializeDateFormatting('id_ID', null);
     Intl.defaultLocale = 'id_ID';
-
-    // Initialize services (memuat data dummy JSON)
-    await AuthService.init();
-    await ProductService.init();
+    // Data user & produk diambil dari API DummyJSON setelah login (tidak ada data lokal).
   } catch (e, st) {
     // Jangan crash diam-diam (layar kosong): tampilkan penyebabnya.
     FlutterError.reportError(FlutterErrorDetails(exception: e, stack: st, library: 'rentory init'));

@@ -6,13 +6,11 @@ import 'package:rentory/data/models/user.dart';
 User _user({required String role, String status = 'aktif'}) => User(
       id: 'usr_test',
       email: 'test@rentory.com',
-      password: 'x',
       nama: 'Test',
       noHp: '0800',
       role: role,
       isVerified: status == 'aktif',
       status: status,
-      createdAt: '2024-01-01T00:00:00Z',
     );
 
 /// Ikuti rantai redirect sampai berhenti; gagal jika berputar (loop).
@@ -36,9 +34,9 @@ void main() {
   const locations = [
     '/splash',
     '/auth/login',
-    '/auth/register',
+    '/auth/forgot-password',
     '/home',
-    '/product/prd_001',
+    '/product/121',
     '/vendor/dashboard',
     '/vendor/pending',
     '/vendor/products',
@@ -58,7 +56,7 @@ void main() {
     expect(_resolve(const Unauthenticated(), '/home'), '/auth/login');
     expect(_resolve(const Unauthenticated(), '/vendor/dashboard'), '/auth/login');
     expect(_resolve(const Unauthenticated(), '/splash'), '/splash');
-    expect(_resolve(const Unauthenticated(), '/auth/register'), '/auth/register');
+    expect(_resolve(const Unauthenticated(), '/auth/forgot-password'), '/auth/forgot-password');
   });
 
   test('sudah login & buka halaman auth -> halaman awal sesuai role', () {

@@ -1,36 +1,44 @@
 // lib/presentation/product/product_detail_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
+import '../../core/constants/rental_catalog.dart';
 import '../../core/utils/format_utils.dart';
 import '../../data/models/product.dart';
 import '../../data/models/vendor.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
+import '../shared/product_image.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   final String productId;
   const ProductDetailScreen({super.key, required this.productId});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  ConsumerState<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    final product = ProductService.getProductById(widget.productId);
-    if (product == null) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Produk Tidak Ditemukan')),
-        body: const Center(child: Text('Produk tidak ditemukan')),
-      );
-    }
+    // GET /auth/products/{id} (atau dari katalog yang sudah dimuat).
+    final provider = productDetailProvider(widget.productId);
+    return ref.watch(provider).when(
+          loading: () => Scaffold(appBar: AppBar(), body: const Center(child: CircularProgressIndicator())),
+          error: (e, _) => Scaffold(
+            appBar: AppBar(title: const Text('Produk')),
+            body: ApiErrorView(error: e, onRetry: () => ref.invalidate(provider)),
+          ),
+          data: _buildDetail,
+        );
+  }
 
+  Widget _buildDetail(Product product) {
     final vendor = getVendorById(product.vendorId);
-    final category = ProductService.getCategoryById(product.categoryId);
+    final categoryLabel = RentalCatalog.labelFor(product.categoryId);
 
     return Scaffold(
       appBar: AppBar(
@@ -205,15 +213,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ],
 
                   // Category
-                  if (category != null) ...[
-                    Row(
-                      children: [
-                        Icon(AppIcons.tag, size: 18, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
-                        const SizedBox(width: 8),
-                        Text('Kategori: ${category.nama}', style: Theme.of(context).textTheme.bodyMedium),
-                      ],
-                    ),
-                  ],
+                  Row(
+                    children: [
+                      Icon(AppIcons.tag, size: 18, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                      const SizedBox(width: 8),
+                      Text('Kategori: $categoryLabel', style: Theme.of(context).textTheme.bodyMedium),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -239,17 +245,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: PageView.builder(
             itemCount: product.foto.length,
             onPageChanged: (i) => setState(() => _currentImageIndex = i),
-            itemBuilder: (context, index) {
-              return Image.asset(
-                product.foto[index],
-                fit: BoxFit.cover,
-                width: double.infinity,
-                errorBuilder: (_, _, _) => Container(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: Center(child: Icon(AppIcons.image, size: 64, color: Colors.grey)),
-                ),
-              );
-            },
+            itemBuilder: (context, index) => ProductImage(url: product.foto[index], iconSize: 64),
           ),
         ),
         if (product.foto.length > 1)

@@ -45,27 +45,16 @@ lib/
 │   ├── routing/app_router.dart    # GoRouter + auth guards
 │   └── utils/                     # location, format, validation
 ├── data/
-│   ├── dummy/                     # HANYA 3 FILE JSON (read-only runtime)
-│   │   ├── users.json             # 6 demo users
-│   │   ├── categories.json        # 6 categories
-│   │   └── products.json          # 12 products
 │   ├── models/                    # Freezed models (*.freezed.dart, *.g.dart)
 │   ├── services/                  # HANYA 2 SERVICE pakai JSON
-│   │   ├── auth_service.dart      # Login/register → users.json
-│   │   └── product_service.dart   # CRUD products → products.json
+│   │   ├── api_client.dart        # HTTP DummyJSON + Bearer token
+│   │   ├── token_storage.dart     # Token di SharedPreferences
+│   │   ├── auth_service.dart      # Login API DummyJSON (email → /auth/login → /auth/me)
+│   │   └── product_service.dart   # Katalog & CRUD dari API /auth/products
 │   └── mock/                      # SEMUA DATA LAIN (in-memory)
-│       ├── vendor_mock.dart       # 4 vendors + Haversine helpers
-│       ├── booking_mock.dart
-│       ├── rental_mock.dart
-│       ├── payment_mock.dart
-│       ├── review_mock.dart
-│       ├── chat_mock.dart
-│       ├── notification_mock.dart
-│       ├── dispute_mock.dart
-│       ├── blacklist_mock.dart
-│       └── vendor_document_mock.dart
+│       └── vendor_mock.dart       # 4 toko (DummyJSON tidak punya data toko) + Haversine
 └── presentation/                  # Feature-first screens
-    ├── auth/                      # Login, Register, RoleSelect, VendorRegister
+    ├── auth/                      # Login, ForgotPassword
     ├── home/                      # HomeScreen (katalog, filter, nearby)
     ├── product/                   # ProductDetail, ProductSearch
     ├── booking/                   # BookingCreate (placeholder)
@@ -131,7 +120,7 @@ dart run build_runner watch
 |--------|-------|------|----------------|
 | ![Splash](assets/images/splash.png) | ![Login](assets/images/login.png) | ![Home](assets/images/home.png) | ![Detail](assets/images/detail.png) |
 
-> *Tambahkan screenshot ke `assets/images/` setelah build*
+> *Tambahkan screenshot ke `assets/images/` setelah build (folder dibuat saat dibutuhkan)*
 
 ---
 
@@ -215,11 +204,11 @@ MIT License — bebas dipakai, dimodifikasi, didistribusikan.
 
 ## 👨‍💻 Author
 
-**Ragah Mujahidin** (NPM 2407051015)  
-D3 Manajemen Informatika  
+**Ragah Mujahidin** (NPM 2407051015)
+D3 Manajemen Informatika
 Project: Rentory v2 — Marketplace Sewa Barang
 
 ---
 
-> Dibangun dengan ❤️ menggunakan Flutter, Riverpod, Freezed, GoRouter  
+> Dibangun dengan ❤️ menggunakan Flutter, Riverpod, Freezed, GoRouter
 > *Dummy JSON backend untuk Products & Auth only — sisanya mock lokal*

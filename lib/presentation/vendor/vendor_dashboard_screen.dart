@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorDashboardScreen extends StatelessWidget {
@@ -7,7 +8,16 @@ class VendorDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard Toko')),
+      appBar: AppBar(
+        title: const Text('Dashboard Toko'),
+        actions: [
+          IconButton(
+            icon: const Icon(AppIcons.user),
+            tooltip: 'Profil',
+            onPressed: () => context.push('/profile'),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

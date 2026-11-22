@@ -1,11 +1,15 @@
 // lib/data/mock/vendor_mock.dart
+//
+// Data toko — TAMBAHAN aplikasi karena DummyJSON tidak punya konsep toko,
+// rekening, koordinat, maupun opsi pengambilan. `userId` = id user DummyJSON
+// pemilik toko; akun yang memiliki toko otomatis berperan sebagai pengusaha.
 import 'dart:math';
 import '../models/vendor.dart';
 
 final List<Vendor> mockVendors = [
   Vendor(
     id: 'vnd_001',
-    userId: 'usr_002',
+    userId: '6', // DummyJSON: oliviaw
     namaToko: 'Sewa Kamera Jaya',
     deskripsi: 'Penyewaan kamera & lens profesional. Melayani prewedding, event, corporate video, live streaming. Berpengalaman 5+ tahun.',
     logo: 'assets/logos/kamera_jaya.png',
@@ -19,7 +23,7 @@ final List<Vendor> mockVendors = [
     rekening: BankAccount(
       bank: 'BCA',
       nomorRekening: '1234567890',
-      atasNama: 'Budi Santoso',
+      atasNama: 'Olivia Wilson',
     ),
     tarifDendaPerHari: 50000,
     persenDeposit: 30,
@@ -33,7 +37,7 @@ final List<Vendor> mockVendors = [
   ),
   Vendor(
     id: 'vnd_002',
-    userId: 'usr_003',
+    userId: '7', // DummyJSON: alexanderj
     namaToko: 'Tenda & Outdoor Bandung',
     deskripsi: 'Spesialis sewa peralatan camping & gunung. Tenda, sleeping bag, carrier, kompor, mattress. Ready untuk gunung 3000mdpl+.',
     logo: 'assets/logos/tenda_outdoor.png',
@@ -47,7 +51,7 @@ final List<Vendor> mockVendors = [
     rekening: BankAccount(
       bank: 'Mandiri',
       nomorRekening: '9876543210',
-      atasNama: 'Siti Rahayu',
+      atasNama: 'Alexander Jones',
     ),
     tarifDendaPerHari: 25000,
     persenDeposit: 25,
@@ -61,7 +65,7 @@ final List<Vendor> mockVendors = [
   ),
   Vendor(
     id: 'vnd_003',
-    userId: 'usr_005',
+    userId: '8', // DummyJSON: avat
     namaToko: 'TechRent Bandung',
     deskripsi: 'Sewa elektronik premium: MacBook, drone, proyektor, speaker, VR. Cocok event, presentasi, production. Termasuk setup teknisi.',
     logo: 'assets/logos/techrent.png',
@@ -75,7 +79,7 @@ final List<Vendor> mockVendors = [
     rekening: BankAccount(
       bank: 'BNI',
       nomorRekening: '5555666677',
-      atasNama: 'Ratna Dewi',
+      atasNama: 'Ava Taylor',
     ),
     tarifDendaPerHari: 100000,
     persenDeposit: 50,
@@ -89,7 +93,7 @@ final List<Vendor> mockVendors = [
   ),
   Vendor(
     id: 'vnd_004',
-    userId: 'usr_006',
+    userId: '9', // DummyJSON: ethanm
     namaToko: 'Roda Bebas Rental',
     deskripsi: 'Sewa kendaraan: motor matic, mobil MPV, sepeda gunung. STNK lengkap, asuransi, helmet disediakan. Bisa antar jemput.',
     logo: 'assets/logos/roda_bebas.png',
@@ -103,7 +107,7 @@ final List<Vendor> mockVendors = [
     rekening: BankAccount(
       bank: 'BRI',
       nomorRekening: '8888999900',
-      atasNama: 'Doni Pratama',
+      atasNama: 'Ethan Martinez',
     ),
     tarifDendaPerHari: 75000,
     persenDeposit: 20,

@@ -3,13 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../presentation/auth/login_screen.dart';
-import '../../presentation/auth/register_screen.dart';
 import '../../presentation/auth/forgot_password_screen.dart';
-import '../../presentation/auth/role_select_screen.dart';
-import '../../presentation/auth/vendor_register_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/product/product_detail_screen.dart';
 import '../../presentation/product/product_search_screen.dart';
+import '../../presentation/product/api_products_screen.dart';
 import '../../presentation/booking/booking_create_screen.dart';
 import '../../presentation/booking/my_bookings_screen.dart';
 import '../../presentation/booking/booking_detail_screen.dart';
@@ -104,18 +102,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
-        path: '/auth/register',
-        builder: (context, state) => const RegisterScreen(),
-      ),
-      GoRoute(
-        path: '/auth/role-select',
-        builder: (context, state) => const RoleSelectScreen(),
-      ),
-      GoRoute(
-        path: '/auth/vendor-register',
-        builder: (context, state) => const VendorRegisterScreen(),
-      ),
-      GoRoute(
         path: '/auth/forgot-password',
         builder: (context, state) => const ForgotPasswordScreen(),
       ),
@@ -184,6 +170,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/api-products',
+        builder: (context, state) => const ApiProductsScreen(),
       ),
       GoRoute(
         path: '/profile/edit',

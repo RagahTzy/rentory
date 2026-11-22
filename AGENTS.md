@@ -1,14 +1,14 @@
 # AGENTS.md — Rentory v2 Project Instructions
 
-> **Project**: Rentory v2 — Marketplace Sewa Barang Multi-Vendor  
-> **Location**: `D:/Ragah_Mujahidin/kampus/catatan_semester_5/mola/rentory`  
+> **Project**: Rentory v2 — Marketplace Sewa Barang Multi-Vendor
+> **Location**: `D:/Ragah_Mujahidin/kampus/catatan_semester_5/mola/rentory`
 > **Last Updated**: 2025-11-22
 
 ---
 
 ## 🎯 Project Overview
 
-**Rentory** adalah marketplace multi-vendor untuk sewa barang. Tiga role: **Penyewa** (cari & booking), **Pengusaha/Mitra** (kelola toko & transaksi), **Admin** (verifikasi & moderasi). Backend menggunakan **Dummy JSON** hanya untuk **Products** & **Auth**; sisanya mock lokal (Riverpod state).
+**Rentory** adalah marketplace multi-vendor untuk sewa barang. Tiga role: **Penyewa** (cari & booking), **Pengusaha/Mitra** (kelola toko & transaksi), **Admin** (verifikasi & moderasi). **Auth & Products 100% dari API DummyJSON** (https://dummyjson.com) — tidak ada file JSON lokal. Data yang tidak ada di DummyJSON (toko, tarif sewa) adalah tambahan di `rental_catalog.dart` & `vendor_mock.dart`.
 
 ---
 
@@ -33,47 +33,37 @@ lib/
 ├── main.dart                          # App entry, providers, router
 ├── core/
 │   ├── constants/app_constants.dart   # Role, status, config keys
+│   ├── constants/api_constants.dart   # Endpoint DummyJSON
+│   ├── constants/rental_catalog.dart  # Tambahan sewa: kategori→toko, tarif Rp/hari, aturan
 │   ├── theme/app_theme.dart           # Light/Dark ThemeData
 │   ├── routing/app_router.dart        # All routes + redirect guards
 │   └── utils/                         # location, format, validation
 ├── data/
-│   ├── dummy/                         # HANYA 3 FILE JSON
-│   │   ├── users.json                 # 6 demo users (auth source)
-│   │   ├── categories.json            # 6 categories
-│   │   └── products.json              # 12 products (vendor_id linked)
 │   ├── models/                        # Freezed models (*.freezed.dart, *.g.dart)
-│   │   ├── user.dart
-│   │   ├── product.dart
-│   │   ├── vendor.dart
-│   │   ├── booking.dart
-│   │   └── others.dart
-│   ├── services/                      # HANYA 2 SERVICE PAKAI JSON
-│   │   ├── auth_service.dart          # Login/register → users.json
-│   │   └── product_service.dart       # CRUD products → products.json
-│   └── mock/                          # SEMUA DATA LAIN (in-memory)
-│       ├── vendor_mock.dart           # 4 vendors + Haversine helpers
-│       ├── booking_mock.dart
-│       ├── rental_mock.dart
-│       ├── payment_mock.dart
-│       ├── review_mock.dart
-│       ├── chat_mock.dart
-│       ├── notification_mock.dart
-│       ├── dispute_mock.dart
-│       ├── blacklist_mock.dart
-│       └── vendor_document_mock.dart
+│   │   ├── api_models.dart            # Response DummyJSON (LoginResponse, ApiUser, ApiProduct, ApiCategory)
+│   │   ├── user.dart                  # User aplikasi (dibentuk dari /auth/me)
+│   │   ├── product.dart               # Produk sewa (dibentuk dari /auth/products + RentalCatalog)
+│   │   └── vendor.dart
+│   ├── services/                      # SEMUA data user & produk dari API DummyJSON
+│   │   ├── api_client.dart            # HTTP wrapper + Bearer token + auto refresh
+│   │   ├── token_storage.dart         # Token di SharedPreferences
+│   │   ├── auth_service.dart          # /users/filter, /auth/login, /auth/me
+│   │   └── product_service.dart       # Katalog sewa + CRUD /auth/products, catalogProvider
+│   └── mock/
+│       └── vendor_mock.dart           # 4 toko (tambahan: DummyJSON tidak punya data toko)
 └── presentation/
-    ├── auth/                          # Login, Register, RoleSelect, VendorRegister
+    ├── auth/                          # Login, ForgotPassword (registrasi dihapus: akun dari DummyJSON)
     ├── home/                          # HomeScreen (katalog, filter, nearby)
-    ├── product/                       # ProductDetail, ProductSearch
+    ├── product/                       # ProductDetail, ProductSearch, ApiProducts (CRUD)
     ├── booking/                       # BookingCreate (placeholder)
     ├── rental/                        # (placeholder)
     ├── payment/                       # (placeholder)
-    ├── profile/                       # (placeholder)
+    ├── profile/                       # Profile (data /auth/me + toko), logout
     ├── vendor/                        # VendorDashboard + sub-screens (placeholder)
     ├── admin/                         # AdminDashboard + sub-screens (placeholder)
     ├── chat/                          # (placeholder)
     ├── notifications/                 # (placeholder)
-    └── shared/                        # SplashScreen
+    └── shared/                        # SplashScreen (restore sesi), ProductImage
 ```
 
 ---
@@ -85,9 +75,9 @@ lib/
 | 1 | **Pembayaran**: Transfer langsung ke rekening pengusaha | `Vendor.rekening` (bank, nomor, atas nama) wajib di form daftar |
 | 2 | **Komisi**: Gratis (0%) | `settings.komisi_persen = 0`, no invoice/payout logic |
 | 3 | **Lokasi "Dekat Saya"**: Haversine client-side | `location_utils.dart` → `vendor_mock.dart.getNearbyVendors()` |
-| 4 | **Koordinat**: Wajib `latitude`, `longitude` di vendor | Form `VendorRegisterScreen` + `Vendor` model |
+| 4 | **Koordinat**: Wajib `latitude`, `longitude` di vendor | `vendor_mock.dart` + `Vendor` model |
 | 5 | **Pengambilan**: 2 opsi (`ambil_di_toko` wajib, `diantar` opsional) | `Vendor.opsiPengambilan` list + `biayaAntarPerKm` + `radiusAntarMaxKm` |
-| 6 | **Backend**: Dummy JSON **hanya** Products & Auth | `auth_service.dart`, `product_service.dart` saja pakai JSON; sisanya mock |
+| 6 | **Backend**: API DummyJSON untuk Products & Auth (tanpa file JSON lokal) | `auth_service.dart`, `product_service.dart` → `api_client.dart`; toko di `vendor_mock.dart` |
 | 7 | **Isolasi Data Vendor**: Setiap query pengusaha **harus** filter `vendor_id` | Enforced di repository/service layer, bukan UI |
 
 ---
@@ -144,9 +134,8 @@ flutter build apk --release
 
 ## 🚫 Don't Do
 
-- ❌ Jangan tambah service baru yang baca JSON (hanya Auth & Product)
+- ❌ Jangan tambah file JSON lokal untuk user/produk — ambil dari API DummyJSON (data tambahan khusus sewa → `rental_catalog.dart`)
 - ❌ Jangan hardcode `vendor_id` di UI — selalu dari auth state / provider
-- ❌ Jangan edit `users.json`, `products.json`, `categories.json` manual saat runtime (read-only)
 - ❌ Jangan skip `build_runner` setelah ubah model Freezed
 - ❌ Jangan commit file `*.g.dart`, `*.freezed.dart` tanpa generate ulang
 - ❌ Jangan pakai `setState` di ConsumerWidget — pakai Riverpod state
@@ -175,17 +164,17 @@ Guard di `app_router.dart` redirect:
 
 ## 📦 Dummy Data Reference
 
-**users.json** — 6 users:
-- `usr_001`: admin@rentory.com / admin123 (admin)
-- `usr_002`: budi@toko.com / budi123 (pengusaha, aktif, vnd_001)
-- `usr_003`: siti@toko.com / siti123 (pengusaha, aktif, vnd_002)
-- `usr_004`: andi@sewa.com / andi123 (penyewa)
-- `usr_005`: ratna@toko.com / ratna123 (pengusaha, menunggu_verifikasi, vnd_003)
-- `usr_006`: doni@sewa.com / doni123 (penyewa, juga vendor vnd_004)
+**Akun (API DummyJSON, login pakai email)** — role: `admin` DummyJSON → admin; pemilik toko di `vendor_mock.dart` → pengusaha; lainnya → penyewa:
+- `emily.johnson@x.dummyjson.com` / `emilyspass` (admin, id 1)
+- `olivia.wilson@x.dummyjson.com` / `oliviawpass` (pengusaha, vnd_001 aktif, id 6)
+- `alexander.jones@x.dummyjson.com` / `alexanderjpass` (pengusaha, vnd_002 aktif, id 7)
+- `ava.taylor@x.dummyjson.com` / `avatpass` (pengusaha, vnd_003 menunggu verifikasi, id 8)
+- `ethan.martinez@x.dummyjson.com` / `ethanmpass` (pengusaha, vnd_004 aktif, id 9)
+- `avery.perez@x.dummyjson.com` / `averyppass` (penyewa, id 16)
 
-**products.json** — 12 products across 4 vendors (vnd_001..vnd_004), 6 categories
+**Produk (API DummyJSON `/auth/products`)** — hanya kategori di `RentalCatalog.categories` (smartphones, tablets, mobile-accessories → vnd_001; sports-accessories, sunglasses → vnd_002; laptops → vnd_003; vehicle, motorcycle → vnd_004). Tarif = 1% harga USD × Rp16.000 per hari (min Rp10.000), mingguan = 6× harian.
 
-**vendor_mock.dart** — 4 vendors dengan lengkap: rekening, koordinat, kebijakan, opsi antar
+**vendor_mock.dart** — 4 toko lengkap: rekening, koordinat, kebijakan, opsi antar (`userId` = id user DummyJSON)
 
 ---
 
@@ -218,11 +207,10 @@ Priority screens to build:
 ## 🐛 Known Issues / TODO
 
 - [x] `build_runner` sudah jalan (Freezed 4 + json_serializable, `build.yaml` → `field_rename: snake`)
-- [ ] `VendorRegisterScreen` belum simpan dokumen upload (mock only)
 - [ ] Haversine di `vendor_mock.dart` pakai `dart:math` — OK
-- [ ] Belum ada persist local storage untuk mock data (Hive/SharedPreferences)
 - [ ] Placeholder screens banyak — perlu implementasi bertahap
-- [ ] Test unit untuk format & validation utils (haversine, router guard, parsing JSON sudah ada di `test/`)
+- [ ] Mock booking/rental/chat/dll sudah dihapus (tidak terpakai) — Phase 3+ perlu membuat datanya lagi (lihat git history)
+- [ ] DummyJSON tidak menyimpan hasil POST/PUT/DELETE (simulasi) → data kembali seperti semula setelah refresh
 
 ---
 

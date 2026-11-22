@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/validation_utils.dart';
-import '../../data/services/auth_service.dart';
 import '../../core/auth/auth_state.dart';
+import '../../data/services/api_client.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -38,18 +38,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     try {
-      final user = await AuthService.login(
-        _emailController.text.trim(),
-        _passwordController.text,
-      );
-
+      // Email → username (GET /users/filter) → POST /auth/login → token ke SharedPreferences.
+      final user = await ref.read(authStateProvider.notifier).login(
+            _emailController.text.trim(),
+            _passwordController.text,
+          );
       if (!mounted) return;
-      if (user != null) {
-        ref.read(authStateProvider.notifier).setUser(user);
-        context.go(homePathFor(user));
-      } else {
-        setState(() => _errorMessage = 'Email atau password salah');
-      }
+      context.go(homePathFor(user));
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      setState(() => _errorMessage = e.statusCode == 400 ? 'Email atau password salah' : e.message);
     } catch (e) {
       if (mounted) setState(() => _errorMessage = 'Terjadi kesalahan: $e');
     } finally {
@@ -112,13 +110,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     hintText: 'contoh@email.com',
                     prefixIcon: Icon(AppIcons.envelope),
                   ),
-                  validator: validateEmail,
+                  validator: (v) => validateEmail(v?.trim()),
                 ),
                 const SizedBox(height: 16),
 
@@ -135,7 +134,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  validator: (v) => validatePassword(v, minLength: 6),
+                  validator: (v) => validateRequired(v, 'Password'),
                   onFieldSubmitted: (_) => _handleLogin(),
                 ),
                 const SizedBox(height: 8),
@@ -157,21 +156,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Belum punya akun? ',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
-                    ),
-                    TextButton(
-                      onPressed: () => context.go('/auth/role-select'),
-                      child: const Text('Daftar'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -181,11 +165,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Akun Demo:', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+                      Text('Akun Demo DummyJSON (ketuk untuk mengisi):', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
                       const SizedBox(height: 8),
-                      _buildDemoAccount('Admin', 'admin@rentory.com', 'admin123'),
-                      _buildDemoAccount('Pengusaha (Budi)', 'budi@toko.com', 'budi123'),
-                      _buildDemoAccount('Penyewa (Andi)', 'andi@sewa.com', 'andi123'),
+                      _buildDemoAccount('Admin', 'emily.johnson@x.dummyjson.com', 'emilyspass'),
+                      _buildDemoAccount('Pengusaha (Sewa Kamera Jaya)', 'olivia.wilson@x.dummyjson.com', 'oliviawpass'),
+                      _buildDemoAccount('Pengusaha (Tenda & Outdoor)', 'alexander.jones@x.dummyjson.com', 'alexanderjpass'),
+                      _buildDemoAccount('Pengusaha (menunggu verifikasi)', 'ava.taylor@x.dummyjson.com', 'avatpass'),
+                      _buildDemoAccount('Penyewa', 'avery.perez@x.dummyjson.com', 'averyppass'),
                     ],
                   ),
                 ),
@@ -198,13 +184,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _buildDemoAccount(String label, String email, String pass) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Text(
-        '$label: $email / $pass',
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          fontFamily: 'monospace',
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+    return InkWell(
+      borderRadius: BorderRadius.circular(6),
+      onTap: _isLoading
+          ? null
+          : () => setState(() {
+                _emailController.text = email;
+                _passwordController.text = pass;
+                _errorMessage = null;
+              }),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Text(
+          '$label:\n$email / $pass',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            fontFamily: 'monospace',
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+          ),
         ),
       ),
     );

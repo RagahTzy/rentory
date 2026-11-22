@@ -9,6 +9,7 @@ import '../../data/models/product.dart';
 import '../../data/models/vendor.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
+import '../shared/product_image.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -19,33 +20,21 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _currentIndex = 0;
-  String _selectedCategory = 'Semua';
-  final List<String> _categories = ['Semua', 'Kamera & Video', 'Outdoor & Camping', 'Elektronik', 'Fashion', 'Alat Bangun', 'Kendaraan'];
-  
+  /// Slug kategori DummyJSON yang dipilih; null = semua.
+  String? _selectedCategory;
+
+  /// Jumlah barang yang ditampilkan di "Barang Populer" (sisanya lewat Cari).
+  static const _popularCount = 20;
+
   // Mock user location (Bandung center)
   final double _userLat = -6.9175;
   final double _userLng = 107.6191;
 
   @override
   Widget build(BuildContext context) {
-    final products = ProductService.getAvailableProducts();
+    // Katalog dari API DummyJSON (GET /auth/products + /auth/products/categories).
+    final catalog = ref.watch(catalogProvider);
     final vendors = getActiveVendors();
-    
-    // Filter by category
-    var filteredProducts = products;
-    if (_selectedCategory != 'Semua') {
-      final catMap = {
-        'Kamera & Video': 'cat_001',
-        'Outdoor & Camping': 'cat_002',
-        'Elektronik': 'cat_003',
-        'Fashion': 'cat_004',
-        'Alat Bangun': 'cat_005',
-        'Kendaraan': 'cat_006',
-      };
-      if (catMap[_selectedCategory] != null) {
-        filteredProducts = products.where((p) => p.categoryId == catMap[_selectedCategory]).toList();
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +54,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ],
       ),
-      body: _currentIndex == 0 ? _buildHomeTab(filteredProducts, vendors) : _buildCategoriesTab(),
+      body: catalog.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => ApiErrorView(error: e, onRetry: () => ref.invalidate(catalogProvider)),
+        data: (data) => RefreshIndicator(
+          onRefresh: () => ref.refresh(catalogProvider.future),
+          child: _currentIndex == 0 ? _buildHomeTab(data, vendors) : _buildCategoriesTab(data.categories),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
@@ -79,8 +75,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildHomeTab(List<Product> products, List<Vendor> vendors) {
+  Widget _buildHomeTab(Catalog catalog, List<Vendor> vendors) {
+    final categories = catalog.categories;
+    final products = catalog.available
+        .where((p) => _selectedCategory == null || p.categoryId == _selectedCategory)
+        .toList()
+      ..sort((a, b) => b.ratingRata.compareTo(a.ratingRata));
+    final shown = products.take(_popularCount).toList();
+
     return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,16 +117,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             height: 40,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: _categories.length,
+              itemCount: categories.length + 1,
               itemBuilder: (context, index) {
-                final cat = _categories[index];
-                final selected = cat == _selectedCategory;
+                final cat = index == 0 ? null : categories[index - 1];
+                final selected = cat?.id == _selectedCategory;
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: FilterChip(
-                    label: Text(cat),
+                    label: Text(cat?.nama ?? 'Semua'),
                     selected: selected,
-                    onSelected: (_) => setState(() => _selectedCategory = cat),
+                    onSelected: (_) => setState(() => _selectedCategory = cat?.id),
                     selectedColor: Theme.of(context).colorScheme.primaryContainer,
                     labelStyle: TextStyle(
                       color: selected ? Theme.of(context).colorScheme.primary : null,
@@ -178,16 +182,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
-            itemCount: products.length,
-            itemBuilder: (context, index) => _buildProductCard(products[index]),
+            itemCount: shown.length,
+            itemBuilder: (context, index) => _buildProductCard(shown[index]),
           ),
+          if (shown.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Center(child: Text('Belum ada barang di kategori ini')),
+            ),
         ],
       ),
     );
   }
 
-  Widget _buildCategoriesTab() {
+  Widget _buildCategoriesTab(List<Category> categories) {
     return GridView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -195,12 +205,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
       ),
-      itemCount: _categories.length - 1, // exclude 'Semua'
+      itemCount: categories.length,
       itemBuilder: (context, index) {
-        final cat = _categories[index + 1];
-        return _CategoryCard(name: cat, onTap: () {
+        final cat = categories[index];
+        return _CategoryCard(name: cat.nama, onTap: () {
           setState(() {
-            _selectedCategory = cat;
+            _selectedCategory = cat.id;
             _currentIndex = 0;
           });
         });
@@ -284,12 +294,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             AspectRatio(
               aspectRatio: 16/10,
-              child: Container(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                child: product.foto.isNotEmpty
-                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.image, size: 32, color: Colors.grey))
-                    : Icon(AppIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
-              ),
+              child: ProductImage.of(product),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
