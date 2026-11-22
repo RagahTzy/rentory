@@ -1,11 +1,12 @@
 // lib/presentation/product/product_detail_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/format_utils.dart';
+import '../../data/models/product.dart';
+import '../../data/models/vendor.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
-import '../../presentation/booking/booking_create_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String productId;
@@ -35,8 +36,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       appBar: AppBar(
         title: Text(product.nama, maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: [
-          IconButton(icon: const Icon(PhosphorIcons.heart), onPressed: () {}),
-          IconButton(icon: const Icon(PhosphorIcons.share), onPressed: () {}),
+          IconButton(icon: const Icon(AppIcons.heart), onPressed: () {}),
+          IconButton(icon: const Icon(AppIcons.share), onPressed: () {}),
         ],
       ),
       bottomNavigationBar: _buildBottomBar(context, product, vendor),
@@ -65,7 +66,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             if (vendor != null) ...[
                               Row(
                                 children: [
-                                  Icon(PhosphorIcons.storefront, size: 16, color: Theme.of(context).colorScheme.primary),
+                                  Icon(AppIcons.storefront, size: 16, color: Theme.of(context).colorScheme.primary),
                                   const SizedBox(width: 4),
                                   Text(vendor.namaToko, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w500)),
                                 ],
@@ -74,17 +75,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                             Row(
                               children: [
-                                Icon(PhosphorIcons.star, size: 16, color: Colors.amber),
+                                Icon(AppIcons.star, size: 16, color: Colors.amber),
                                 const SizedBox(width: 4),
                                 Text('${product.ratingRata}', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
                                 const SizedBox(width: 8),
-                                Text('(${product.totalReview} review)', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                                Text('(${product.totalReview} review)', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
                                 const SizedBox(width: 16),
                                 if (vendor != null)
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                     decoration: BoxDecoration(
-                                      color: vendor.isActive ? Colors.green.withOpacity(0.1) : Colors.orange.withOpacity(0.1),
+                                      color: vendor.isActive ? Colors.green.withValues(alpha: 0.1) : Colors.orange.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
@@ -120,7 +121,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Harga Sewa', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7))),
+                                Text('Harga Sewa', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7))),
                                 Text(
                                   formatCurrency(product.hargaPerHari),
                                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -133,16 +134,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text('/ hari', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7))),
+                                Text('/ hari', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7))),
                                 if (product.hargaPerJam != null)
                                   Text(
                                     '${formatCurrency(product.hargaPerJam!)}/jam',
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7)),
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7)),
                                   ),
                                 if (product.hargaPerMinggu > 0)
                                   Text(
                                     '${formatCurrency(product.hargaPerMinggu)}/minggu',
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7)),
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7)),
                                   ),
                               ],
                             ),
@@ -179,14 +180,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.amber.withOpacity(0.1),
+                        color: Colors.amber.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.amber.withOpacity(0.3)),
+                        border: Border.all(color: Colors.amber.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(PhosphorIcons.warning, size: 20, color: Colors.amber.shade700),
+                          Icon(AppIcons.warning, size: 20, color: Colors.amber.shade700),
                           const SizedBox(width: 8),
                           Expanded(child: Text(product.aturanKhusus!, style: Theme.of(context).textTheme.bodyMedium)),
                         ],
@@ -207,7 +208,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   if (category != null) ...[
                     Row(
                       children: [
-                        Icon(PhosphorIcons.tag, size: 18, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+                        Icon(AppIcons.tag, size: 18, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
                         const SizedBox(width: 8),
                         Text('Kategori: ${category.nama}', style: Theme.of(context).textTheme.bodyMedium),
                       ],
@@ -227,7 +228,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return Container(
         height: 280,
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        child: Center(child: Icon(PhosphorIcons.package, size: 64, color: Theme.of(context).colorScheme.primary)),
+        child: Center(child: Icon(AppIcons.package, size: 64, color: Theme.of(context).colorScheme.primary)),
       );
     }
 
@@ -243,9 +244,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 product.foto[index],
                 fit: BoxFit.cover,
                 width: double.infinity,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  child: Center(child: Icon(PhosphorIcons.image, size: 64, color: Colors.grey)),
+                  child: Center(child: Icon(AppIcons.image, size: 64, color: Colors.grey)),
                 ),
               );
             },
@@ -266,7 +267,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: _currentImageIndex == index ? Colors.white : Colors.white.withOpacity(0.5),
+                    color: _currentImageIndex == index ? Colors.white : Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -307,16 +308,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Row(
         children: [
           Expanded(
-            child: OutlinedButton(
+            // .icon membuat label Flexible; padding dikecilkan karena tombol ini
+            // hanya ~1/3 lebar layar (dulu overflow di layar HP 360px).
+            child: OutlinedButton.icon(
               onPressed: () => context.go('/chat?vendorId=${vendor.id}'),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(PhosphorIcons.chatCircle, size: 18),
-                  const SizedBox(width: 8),
-                  const Text('Tanya'),
-                ],
-              ),
+              style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14)),
+              icon: const Icon(AppIcons.chatCircle, size: 18),
+              label: const Text('Tanya', maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
           ),
           const SizedBox(width: 12),
@@ -343,7 +341,7 @@ class _PriceOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7))),
+        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7))),
         const SizedBox(height: 4),
         Text(price, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.primary)),
       ],
@@ -368,7 +366,7 @@ class _VendorInfoCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 24,
                   backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                  child: Icon(PhosphorIcons.storefront, color: Theme.of(context).colorScheme.primary),
+                  child: Icon(AppIcons.storefront, color: Theme.of(context).colorScheme.primary),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -376,13 +374,13 @@ class _VendorInfoCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(vendor.namaToko, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-                      Text('${vendor.kota} • ${vendor.alamat}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                      Text('${vendor.kota} • ${vendor.alamat}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
                     ],
                   ),
                 ),
                 Column(
                   children: [
-                    Icon(PhosphorIcons.star, color: Colors.amber),
+                    Icon(AppIcons.star, color: Colors.amber),
                     Text('${vendor.ratingRata}', style: const TextStyle(fontWeight: FontWeight.w600)),
                     Text('(${vendor.totalReview})', style: Theme.of(context).textTheme.bodySmall),
                   ],
@@ -393,14 +391,14 @@ class _VendorInfoCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _InfoItem(icon: PhosphorIcons.clock, label: 'Buka', value: vendor.jamOperasional),
+                  child: _InfoItem(icon: AppIcons.clock, label: 'Buka', value: vendor.jamOperasional),
                 ),
                 Expanded(
-                  child: _InfoItem(icon: PhosphorIcons.phone, label: 'Kontak', value: vendor.kontak),
+                  child: _InfoItem(icon: AppIcons.phone, label: 'Kontak', value: vendor.kontak),
                 ),
                 Expanded(
                   child: _InfoItem(
-                    icon: vendor.canAntar ? PhosphorIcons.truck : PhosphorIcons.package,
+                    icon: vendor.canAntar ? AppIcons.truck : AppIcons.package,
                     label: 'Ambil',
                     value: vendor.canAntar ? 'Diantar & Ambil' : 'Hanya Ambil',
                   ),
@@ -427,7 +425,7 @@ class _InfoItem extends StatelessWidget {
       children: [
         Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
         const SizedBox(height: 4),
-        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+        Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
         Text(value, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500), textAlign: TextAlign.center),
       ],
     );

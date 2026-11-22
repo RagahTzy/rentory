@@ -2,9 +2,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import '../../data/models/user.dart';
+import '../constants/app_constants.dart';
+
+/// Halaman awal sesuai role user. Dipakai oleh guard router DAN layar
+/// login/register, supaya aturan "role → halaman" hanya ada di satu tempat.
+String homePathFor(User user) {
+  if (user.role == AppConstants.roleAdmin) return '/admin/dashboard';
+  if (user.role == AppConstants.rolePengusaha) {
+    return user.status == AppConstants.statusAktif ? '/vendor/dashboard' : '/vendor/pending';
+  }
+  return '/home';
+}
 
 @immutable
-abstract class AuthState {
+sealed class AuthState {
   const AuthState();
 }
 
@@ -30,8 +41,11 @@ class AuthError extends AuthState {
   const AuthError(this.message);
 }
 
-class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier() : super(const Initial());
+/// Riverpod 3: `StateNotifier` sudah dipindah ke API legacy,
+/// jadi dipakai `Notifier` (API modern) dengan method publik yang sama.
+class AuthNotifier extends Notifier<AuthState> {
+  @override
+  AuthState build() => const Initial();
 
   void setUser(User user) => state = Authenticated(user);
   void logout() => state = const Unauthenticated();
@@ -39,6 +53,4 @@ class AuthNotifier extends StateNotifier<AuthState> {
   void setLoading() => state = const Loading();
 }
 
-final authStateProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  return AuthNotifier();
-});
+final authStateProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);

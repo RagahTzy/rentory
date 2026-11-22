@@ -5,7 +5,7 @@ part 'booking.freezed.dart';
 part 'booking.g.dart';
 
 @freezed
-class Booking with _$Booking {
+abstract class Booking with _$Booking {
   const factory Booking({
     required String id,
     required String userId, // penyewa
@@ -30,7 +30,7 @@ class Booking with _$Booking {
 }
 
 @freezed
-class Rental with _$Rental {
+abstract class Rental with _$Rental {
   const factory Rental({
     required String id,
     String? bookingId, // nullable untuk walk-in
@@ -54,7 +54,7 @@ class Rental with _$Rental {
 }
 
 @freezed
-class RentalItem with _$RentalItem {
+abstract class RentalItem with _$RentalItem {
   const factory RentalItem({
     required String id,
     required String rentalId,
@@ -72,7 +72,7 @@ class RentalItem with _$RentalItem {
 }
 
 @freezed
-class Payment with _$Payment {
+abstract class Payment with _$Payment {
   const factory Payment({
     required String id,
     required String rentalId,
@@ -90,7 +90,7 @@ class Payment with _$Payment {
 }
 
 @freezed
-class Extension with _$Extension {
+abstract class Extension with _$Extension {
   const factory Extension({
     required String id,
     required String rentalId,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorMaintenanceScreen extends StatelessWidget {
   const VendorMaintenanceScreen({super.key});
@@ -12,7 +12,7 @@ class VendorMaintenanceScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.wrench, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.wrench, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Maintenance Barang', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

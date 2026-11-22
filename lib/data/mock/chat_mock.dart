@@ -55,7 +55,7 @@ List<Map<String, dynamic>> getChatRooms(String userId) {
   
   for (final msg in userMessages) {
     final otherId = msg.pengirimId == userId ? msg.penerimaId : msg.pengirimId;
-    final key = '${msg.rentalId ?? msg.bookingId ?? otherId}';
+    final key = msg.rentalId ?? msg.bookingId ?? otherId;
     grouped.putIfAbsent(key, () => []).add(msg);
   }
   

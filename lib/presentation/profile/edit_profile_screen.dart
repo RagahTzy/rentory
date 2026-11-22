@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -13,7 +13,7 @@ class EditProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.pencil, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.pencil, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Edit Profil', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 24),

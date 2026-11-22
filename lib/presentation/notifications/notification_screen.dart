@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.bell, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.bell, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Belum ada notifikasi', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

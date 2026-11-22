@@ -6,168 +6,159 @@ part of 'others.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ReviewImpl _$$ReviewImplFromJson(Map<String, dynamic> json) => _$ReviewImpl(
-      id: json['id'] as String,
-      rentalId: json['rentalId'] as String,
-      userId: json['userId'] as String,
-      vendorId: json['vendorId'] as String,
-      itemId: json['itemId'] as String,
-      rating: (json['rating'] as num).toInt(),
-      komentar: json['komentar'] as String,
-      balasanVendor: json['balasanVendor'] as String?,
-      balasanAt: json['balasanAt'] as String?,
-      createdAt: json['createdAt'] as String,
-    );
+_Review _$ReviewFromJson(Map<String, dynamic> json) => _Review(
+  id: json['id'] as String,
+  rentalId: json['rental_id'] as String,
+  userId: json['user_id'] as String,
+  vendorId: json['vendor_id'] as String,
+  itemId: json['item_id'] as String,
+  rating: (json['rating'] as num).toInt(),
+  komentar: json['komentar'] as String,
+  balasanVendor: json['balasan_vendor'] as String?,
+  balasanAt: json['balasan_at'] as String?,
+  createdAt: json['created_at'] as String,
+);
 
-Map<String, dynamic> _$$ReviewImplToJson(_$ReviewImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'rentalId': instance.rentalId,
-      'userId': instance.userId,
-      'vendorId': instance.vendorId,
-      'itemId': instance.itemId,
-      'rating': instance.rating,
-      'komentar': instance.komentar,
-      'balasanVendor': instance.balasanVendor,
-      'balasanAt': instance.balasanAt,
-      'createdAt': instance.createdAt,
-    };
+Map<String, dynamic> _$ReviewToJson(_Review instance) => <String, dynamic>{
+  'id': instance.id,
+  'rental_id': instance.rentalId,
+  'user_id': instance.userId,
+  'vendor_id': instance.vendorId,
+  'item_id': instance.itemId,
+  'rating': instance.rating,
+  'komentar': instance.komentar,
+  'balasan_vendor': instance.balasanVendor,
+  'balasan_at': instance.balasanAt,
+  'created_at': instance.createdAt,
+};
 
-_$VendorBlacklistImpl _$$VendorBlacklistImplFromJson(
-        Map<String, dynamic> json) =>
-    _$VendorBlacklistImpl(
+_VendorBlacklist _$VendorBlacklistFromJson(Map<String, dynamic> json) =>
+    _VendorBlacklist(
       id: json['id'] as String,
-      vendorId: json['vendorId'] as String,
-      userId: json['userId'] as String,
+      vendorId: json['vendor_id'] as String,
+      userId: json['user_id'] as String,
       alasan: json['alasan'] as String,
-      createdAt: json['createdAt'] as String,
+      createdAt: json['created_at'] as String,
     );
 
-Map<String, dynamic> _$$VendorBlacklistImplToJson(
-        _$VendorBlacklistImpl instance) =>
+Map<String, dynamic> _$VendorBlacklistToJson(_VendorBlacklist instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'vendorId': instance.vendorId,
-      'userId': instance.userId,
+      'vendor_id': instance.vendorId,
+      'user_id': instance.userId,
       'alasan': instance.alasan,
-      'createdAt': instance.createdAt,
+      'created_at': instance.createdAt,
     };
 
-_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
-    _$MessageImpl(
-      id: json['id'] as String,
-      pengirimId: json['pengirimId'] as String,
-      penerimaId: json['penerimaId'] as String,
-      rentalId: json['rentalId'] as String?,
-      bookingId: json['bookingId'] as String?,
-      isi: json['isi'] as String,
-      createdAt: json['createdAt'] as String,
-      isRead: json['isRead'] as bool,
-    );
+_Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
+  id: json['id'] as String,
+  pengirimId: json['pengirim_id'] as String,
+  penerimaId: json['penerima_id'] as String,
+  rentalId: json['rental_id'] as String?,
+  bookingId: json['booking_id'] as String?,
+  isi: json['isi'] as String,
+  createdAt: json['created_at'] as String,
+  isRead: json['is_read'] as bool,
+);
 
-Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
+Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
+  'id': instance.id,
+  'pengirim_id': instance.pengirimId,
+  'penerima_id': instance.penerimaId,
+  'rental_id': instance.rentalId,
+  'booking_id': instance.bookingId,
+  'isi': instance.isi,
+  'created_at': instance.createdAt,
+  'is_read': instance.isRead,
+};
+
+_Maintenance _$MaintenanceFromJson(Map<String, dynamic> json) => _Maintenance(
+  id: json['id'] as String,
+  itemId: json['item_id'] as String,
+  deskripsi: json['deskripsi'] as String,
+  biaya: (json['biaya'] as num).toInt(),
+  tglMulai: json['tgl_mulai'] as String,
+  tglSelesai: json['tgl_selesai'] as String,
+  status: json['status'] as String,
+  createdAt: json['created_at'] as String,
+);
+
+Map<String, dynamic> _$MaintenanceToJson(_Maintenance instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'pengirimId': instance.pengirimId,
-      'penerimaId': instance.penerimaId,
-      'rentalId': instance.rentalId,
-      'bookingId': instance.bookingId,
-      'isi': instance.isi,
-      'createdAt': instance.createdAt,
-      'isRead': instance.isRead,
-    };
-
-_$MaintenanceImpl _$$MaintenanceImplFromJson(Map<String, dynamic> json) =>
-    _$MaintenanceImpl(
-      id: json['id'] as String,
-      itemId: json['itemId'] as String,
-      deskripsi: json['deskripsi'] as String,
-      biaya: (json['biaya'] as num).toInt(),
-      tglMulai: json['tglMulai'] as String,
-      tglSelesai: json['tglSelesai'] as String,
-      status: json['status'] as String,
-      createdAt: json['createdAt'] as String,
-    );
-
-Map<String, dynamic> _$$MaintenanceImplToJson(_$MaintenanceImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'itemId': instance.itemId,
+      'item_id': instance.itemId,
       'deskripsi': instance.deskripsi,
       'biaya': instance.biaya,
-      'tglMulai': instance.tglMulai,
-      'tglSelesai': instance.tglSelesai,
+      'tgl_mulai': instance.tglMulai,
+      'tgl_selesai': instance.tglSelesai,
       'status': instance.status,
-      'createdAt': instance.createdAt,
+      'created_at': instance.createdAt,
     };
 
-_$DisputeImpl _$$DisputeImplFromJson(Map<String, dynamic> json) =>
-    _$DisputeImpl(
-      id: json['id'] as String,
-      rentalId: json['rentalId'] as String,
-      pelaporId: json['pelaporId'] as String,
-      deskripsi: json['deskripsi'] as String,
-      bukti: (json['bukti'] as List<dynamic>).map((e) => e as String).toList(),
-      status: json['status'] as String,
-      keputusanAdmin: json['keputusanAdmin'] as String?,
-      decidedAt: json['decidedAt'] as String?,
-      createdAt: json['createdAt'] as String,
-    );
+_Dispute _$DisputeFromJson(Map<String, dynamic> json) => _Dispute(
+  id: json['id'] as String,
+  rentalId: json['rental_id'] as String,
+  pelaporId: json['pelapor_id'] as String,
+  deskripsi: json['deskripsi'] as String,
+  bukti: (json['bukti'] as List<dynamic>).map((e) => e as String).toList(),
+  status: json['status'] as String,
+  keputusanAdmin: json['keputusan_admin'] as String?,
+  decidedAt: json['decided_at'] as String?,
+  createdAt: json['created_at'] as String,
+);
 
-Map<String, dynamic> _$$DisputeImplToJson(_$DisputeImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'rentalId': instance.rentalId,
-      'pelaporId': instance.pelaporId,
-      'deskripsi': instance.deskripsi,
-      'bukti': instance.bukti,
-      'status': instance.status,
-      'keputusanAdmin': instance.keputusanAdmin,
-      'decidedAt': instance.decidedAt,
-      'createdAt': instance.createdAt,
-    };
+Map<String, dynamic> _$DisputeToJson(_Dispute instance) => <String, dynamic>{
+  'id': instance.id,
+  'rental_id': instance.rentalId,
+  'pelapor_id': instance.pelaporId,
+  'deskripsi': instance.deskripsi,
+  'bukti': instance.bukti,
+  'status': instance.status,
+  'keputusan_admin': instance.keputusanAdmin,
+  'decided_at': instance.decidedAt,
+  'created_at': instance.createdAt,
+};
 
-_$NotificationImpl _$$NotificationImplFromJson(Map<String, dynamic> json) =>
-    _$NotificationImpl(
+_Notification _$NotificationFromJson(Map<String, dynamic> json) =>
+    _Notification(
       id: json['id'] as String,
-      userId: json['userId'] as String,
+      userId: json['user_id'] as String,
       judul: json['judul'] as String,
       isi: json['isi'] as String,
       tipe: json['tipe'] as String,
-      referenceId: json['referenceId'] as String?,
-      isRead: json['isRead'] as bool,
-      createdAt: json['createdAt'] as String,
+      referenceId: json['reference_id'] as String?,
+      isRead: json['is_read'] as bool,
+      createdAt: json['created_at'] as String,
     );
 
-Map<String, dynamic> _$$NotificationImplToJson(_$NotificationImpl instance) =>
+Map<String, dynamic> _$NotificationToJson(_Notification instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
+      'user_id': instance.userId,
       'judul': instance.judul,
       'isi': instance.isi,
       'tipe': instance.tipe,
-      'referenceId': instance.referenceId,
-      'isRead': instance.isRead,
-      'createdAt': instance.createdAt,
+      'reference_id': instance.referenceId,
+      'is_read': instance.isRead,
+      'created_at': instance.createdAt,
     };
 
-_$VendorDocumentImpl _$$VendorDocumentImplFromJson(Map<String, dynamic> json) =>
-    _$VendorDocumentImpl(
+_VendorDocument _$VendorDocumentFromJson(Map<String, dynamic> json) =>
+    _VendorDocument(
       id: json['id'] as String,
-      vendorId: json['vendorId'] as String,
+      vendorId: json['vendor_id'] as String,
       jenis: json['jenis'] as String,
-      filePath: json['filePath'] as String,
+      filePath: json['file_path'] as String,
       status: json['status'] as String,
-      createdAt: json['createdAt'] as String,
+      createdAt: json['created_at'] as String,
     );
 
-Map<String, dynamic> _$$VendorDocumentImplToJson(
-        _$VendorDocumentImpl instance) =>
+Map<String, dynamic> _$VendorDocumentToJson(_VendorDocument instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'vendorId': instance.vendorId,
+      'vendor_id': instance.vendorId,
       'jenis': instance.jenis,
-      'filePath': instance.filePath,
+      'file_path': instance.filePath,
       'status': instance.status,
-      'createdAt': instance.createdAt,
+      'created_at': instance.createdAt,
     };

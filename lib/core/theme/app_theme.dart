@@ -1,6 +1,5 @@
 // lib/core/theme/app_theme.dart
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFF2563EB);
@@ -26,11 +25,9 @@ class AppTheme {
       tertiaryContainer: Color(0xFFFEF3C7),
       error: errorColor,
       surface: surfaceColor,
-      background: backgroundColor,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: Color(0xFF0F172A),
-      onBackground: Color(0xFF0F172A),
       onError: Colors.white,
     ),
     scaffoldBackgroundColor: backgroundColor,
@@ -181,11 +178,9 @@ class AppTheme {
       tertiaryContainer: Color(0xFF78350F),
       error: Color(0xFFEF4444),
       surface: Color(0xFF1E293B),
-      background: Color(0xFF0F172A),
       onPrimary: Color(0xFF0F172A),
       onSecondary: Color(0xFF0F172A),
       onSurface: Color(0xFFF8FAFC),
-      onBackground: Color(0xFFF8FAFC),
       onError: Color(0xFF0F172A),
     ),
     scaffoldBackgroundColor: const Color(0xFF0F172A),

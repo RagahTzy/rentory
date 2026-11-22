@@ -18,8 +18,13 @@ class AuthService {
   static Future<User?> login(String email, String password) async {
     await init();
     try {
+      // Pengusaha yang masih menunggu verifikasi tetap boleh login,
+      // lalu router mengarahkannya ke /vendor/pending (sesuai alur di AGENTS.md).
       return _users.firstWhere(
-        (u) => u.email == email && u.password == password && u.status == 'aktif',
+        (u) =>
+            u.email == email &&
+            u.password == password &&
+            (u.status == 'aktif' || (u.role == 'pengusaha' && u.status == 'menunggu_verifikasi')),
       );
     } catch (_) {
       return null;

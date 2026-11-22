@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../core/routing/app_router.dart';
-import '../../data/services/auth_service.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -71,14 +69,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
                     ],
                   ),
                   child: const Icon(
-                    PhosphorIcons.package,
+                    AppIcons.package,
                     size: 60,
                     color: Color(0xFF2563EB),
                   ),
@@ -105,7 +103,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                 'Marketplace Sewa Barang',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                 ),
               ),
             ),

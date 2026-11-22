@@ -1,6 +1,6 @@
 // lib/presentation/vendor/vendor_pending_screen.dart
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorPendingScreen extends StatelessWidget {
   const VendorPendingScreen({super.key});
@@ -18,10 +18,10 @@ class VendorPendingScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
+                  color: Colors.orange.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(PhosphorIcons.clock, size: 64, color: Colors.orange),
+                child: Icon(AppIcons.clock, size: 64, color: Colors.orange),
               ),
               const SizedBox(height: 24),
               Text(
@@ -33,7 +33,7 @@ class VendorPendingScreen extends StatelessWidget {
               Text(
                 'Pengajuan toko Anda sedang ditinjau oleh tim admin.\nProses verifikasi biasanya memakan waktu 1-2 hari kerja.',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -58,7 +58,7 @@ class VendorPendingScreen extends StatelessWidget {
               Text(
                 'Anda akan mendapat notifikasi setelah verifikasi selesai.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -81,7 +81,7 @@ class VendorPendingScreen extends StatelessWidget {
               color: done ? Colors.green : Colors.grey.shade300,
               shape: BoxShape.circle,
             ),
-            child: done ? const Icon(PhosphorIcons.check, size: 16, color: Colors.white) : null,
+            child: done ? const Icon(AppIcons.check, size: 16, color: Colors.white) : null,
           ),
           const SizedBox(width: 16),
           Expanded(

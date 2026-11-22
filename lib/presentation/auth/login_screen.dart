@@ -2,11 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../core/constants/app_constants.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/validation_utils.dart';
 import '../../data/services/auth_service.dart';
-import '../../core/routing/app_router.dart';
+import '../../core/auth/auth_state.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -44,20 +43,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _passwordController.text,
       );
 
+      if (!mounted) return;
       if (user != null) {
         ref.read(authStateProvider.notifier).setUser(user);
-        if (user.role == AppConstants.rolePengusaha) {
-          context.go('/vendor/dashboard');
-        } else if (user.role == AppConstants.roleAdmin) {
-          context.go('/admin/dashboard');
-        } else {
-          context.go('/home');
-        }
+        context.go(homePathFor(user));
       } else {
         setState(() => _errorMessage = 'Email atau password salah');
       }
     } catch (e) {
-      setState(() => _errorMessage = 'Terjadi kesalahan: $e');
+      if (mounted) setState(() => _errorMessage = 'Terjadi kesalahan: $e');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -76,7 +70,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 const SizedBox(height: 40),
                 Icon(
-                  PhosphorIcons.package,
+                  AppIcons.package,
                   size: 64,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -92,7 +86,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Text(
                   'Masuk ke akun Rentory Anda',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -108,7 +102,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(PhosphorIcons.warningCircle, color: Theme.of(context).colorScheme.error, size: 20),
+                        Icon(AppIcons.warningCircle, color: Theme.of(context).colorScheme.error, size: 20),
                         const SizedBox(width: 8),
                         Expanded(child: Text(_errorMessage!, style: TextStyle(color: Theme.of(context).colorScheme.error))),
                       ],
@@ -122,7 +116,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     hintText: 'contoh@email.com',
-                    prefixIcon: Icon(PhosphorIcons.envelope),
+                    prefixIcon: Icon(AppIcons.envelope),
                   ),
                   validator: validateEmail,
                 ),
@@ -135,9 +129,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Masukkan password',
-                    prefixIcon: const Icon(PhosphorIcons.lock),
+                    prefixIcon: const Icon(AppIcons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? PhosphorIcons.eye : PhosphorIcons.eyeSlash),
+                      icon: Icon(_obscurePassword ? AppIcons.eye : AppIcons.eyeSlash),
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
@@ -168,7 +162,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     Text(
                       'Belum punya akun? ',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
                     ),
                     TextButton(
                       onPressed: () => context.go('/auth/role-select'),
@@ -181,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+                    color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -210,7 +204,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         '$label: $email / $pass',
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
           fontFamily: 'monospace',
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
         ),
       ),
     );

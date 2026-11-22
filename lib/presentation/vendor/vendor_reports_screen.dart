@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorReportsScreen extends StatelessWidget {
   const VendorReportsScreen({super.key});
@@ -12,7 +12,7 @@ class VendorReportsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.chartBar, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.chartBar, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Laporan & Statistik', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

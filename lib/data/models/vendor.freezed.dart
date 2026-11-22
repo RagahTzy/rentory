@@ -1,6 +1,6 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// coverage:ignore-file
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'vendor.dart';
@@ -9,825 +9,643 @@ part of 'vendor.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-BankAccount _$BankAccountFromJson(Map<String, dynamic> json) {
-  return _BankAccount.fromJson(json);
-}
 
 /// @nodoc
 mixin _$BankAccount {
-  String get bank => throw _privateConstructorUsedError;
-  String get nomorRekening => throw _privateConstructorUsedError;
-  String get atasNama => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $BankAccountCopyWith<BankAccount> get copyWith =>
-      throw _privateConstructorUsedError;
+ String get bank; String get nomorRekening; String get atasNama;
+/// Create a copy of BankAccount
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BankAccountCopyWith<BankAccount> get copyWith => _$BankAccountCopyWithImpl<BankAccount>(this as BankAccount, _$identity);
+
+  /// Serializes this BankAccount to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as BankAccount;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BankAccount&&(identical(other.bank, _this.bank) || other.bank == _this.bank)&&(identical(other.nomorRekening, _this.nomorRekening) || other.nomorRekening == _this.nomorRekening)&&(identical(other.atasNama, _this.atasNama) || other.atasNama == _this.atasNama));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as BankAccount;
+  return Object.hash(runtimeType,_this.bank,_this.nomorRekening,_this.atasNama);
+}
+
+@override
+String toString() {
+  final _this = this as BankAccount;
+  return 'BankAccount(bank: ${_this.bank}, nomorRekening: ${_this.nomorRekening}, atasNama: ${_this.atasNama})';
+}
+
+
 }
 
 /// @nodoc
-abstract class $BankAccountCopyWith<$Res> {
-  factory $BankAccountCopyWith(
-          BankAccount value, $Res Function(BankAccount) then) =
-      _$BankAccountCopyWithImpl<$Res, BankAccount>;
-  @useResult
-  $Res call({String bank, String nomorRekening, String atasNama});
-}
+abstract mixin class $BankAccountCopyWith<$Res>  {
+  factory $BankAccountCopyWith(BankAccount value, $Res Function(BankAccount) _then) = _$BankAccountCopyWithImpl;
+@useResult
+$Res call({
+ String bank, String nomorRekening, String atasNama
+});
 
+
+
+
+}
 /// @nodoc
-class _$BankAccountCopyWithImpl<$Res, $Val extends BankAccount>
+class _$BankAccountCopyWithImpl<$Res>
     implements $BankAccountCopyWith<$Res> {
-  _$BankAccountCopyWithImpl(this._value, this._then);
+  _$BankAccountCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final BankAccount _self;
+  final $Res Function(BankAccount) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bank = null,
-    Object? nomorRekening = null,
-    Object? atasNama = null,
-  }) {
-    return _then(_value.copyWith(
-      bank: null == bank
-          ? _value.bank
-          : bank // ignore: cast_nullable_to_non_nullable
-              as String,
-      nomorRekening: null == nomorRekening
-          ? _value.nomorRekening
-          : nomorRekening // ignore: cast_nullable_to_non_nullable
-              as String,
-      atasNama: null == atasNama
-          ? _value.atasNama
-          : atasNama // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
+/// Create a copy of BankAccount
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? bank = null,Object? nomorRekening = null,Object? atasNama = null,}) {
+  return _then(BankAccount(
+bank: null == bank ? _self.bank : bank // ignore: cast_nullable_to_non_nullable
+as String,nomorRekening: null == nomorRekening ? _self.nomorRekening : nomorRekening // ignore: cast_nullable_to_non_nullable
+as String,atasNama: null == atasNama ? _self.atasNama : atasNama // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-abstract class _$$BankAccountImplCopyWith<$Res>
-    implements $BankAccountCopyWith<$Res> {
-  factory _$$BankAccountImplCopyWith(
-          _$BankAccountImpl value, $Res Function(_$BankAccountImpl) then) =
-      __$$BankAccountImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String bank, String nomorRekening, String atasNama});
 }
 
-/// @nodoc
-class __$$BankAccountImplCopyWithImpl<$Res>
-    extends _$BankAccountCopyWithImpl<$Res, _$BankAccountImpl>
-    implements _$$BankAccountImplCopyWith<$Res> {
-  __$$BankAccountImplCopyWithImpl(
-      _$BankAccountImpl _value, $Res Function(_$BankAccountImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bank = null,
-    Object? nomorRekening = null,
-    Object? atasNama = null,
-  }) {
-    return _then(_$BankAccountImpl(
-      bank: null == bank
-          ? _value.bank
-          : bank // ignore: cast_nullable_to_non_nullable
-              as String,
-      nomorRekening: null == nomorRekening
-          ? _value.nomorRekening
-          : nomorRekening // ignore: cast_nullable_to_non_nullable
-              as String,
-      atasNama: null == atasNama
-          ? _value.atasNama
-          : atasNama // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Adds pattern-matching-related methods to [BankAccount].
+extension BankAccountPatterns on BankAccount {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BankAccount value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BankAccount() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BankAccount value)  $default,){
+final _that = this;
+switch (_that) {
+case _BankAccount():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BankAccount value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BankAccount() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String bank,  String nomorRekening,  String atasNama)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BankAccount() when $default != null:
+return $default(_that.bank,_that.nomorRekening,_that.atasNama);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String bank,  String nomorRekening,  String atasNama)  $default,) {final _that = this;
+switch (_that) {
+case _BankAccount():
+return $default(_that.bank,_that.nomorRekening,_that.atasNama);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String bank,  String nomorRekening,  String atasNama)?  $default,) {final _that = this;
+switch (_that) {
+case _BankAccount() when $default != null:
+return $default(_that.bank,_that.nomorRekening,_that.atasNama);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$BankAccountImpl implements _BankAccount {
-  const _$BankAccountImpl(
-      {required this.bank,
-      required this.nomorRekening,
-      required this.atasNama});
 
-  factory _$BankAccountImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BankAccountImplFromJson(json);
+class _BankAccount implements BankAccount {
+  const _BankAccount({required this.bank, required this.nomorRekening, required this.atasNama});
+  factory _BankAccount.fromJson(Map<String, dynamic> json) => _$BankAccountFromJson(json);
 
-  @override
-  final String bank;
-  @override
-  final String nomorRekening;
-  @override
-  final String atasNama;
+@override final  String bank;
+@override final  String nomorRekening;
+@override final  String atasNama;
 
-  @override
-  String toString() {
+/// Create a copy of BankAccount
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BankAccountCopyWith<_BankAccount> get copyWith => __$BankAccountCopyWithImpl<_BankAccount>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$BankAccountToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BankAccount&&(identical(other.bank, bank) || other.bank == bank)&&(identical(other.nomorRekening, nomorRekening) || other.nomorRekening == nomorRekening)&&(identical(other.atasNama, atasNama) || other.atasNama == atasNama));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,bank,nomorRekening,atasNama);
+}
+
+@override
+String toString() {
     return 'BankAccount(bank: $bank, nomorRekening: $nomorRekening, atasNama: $atasNama)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BankAccountImpl &&
-            (identical(other.bank, bank) || other.bank == bank) &&
-            (identical(other.nomorRekening, nomorRekening) ||
-                other.nomorRekening == nomorRekening) &&
-            (identical(other.atasNama, atasNama) ||
-                other.atasNama == atasNama));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, bank, nomorRekening, atasNama);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BankAccountImplCopyWith<_$BankAccountImpl> get copyWith =>
-      __$$BankAccountImplCopyWithImpl<_$BankAccountImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BankAccountImplToJson(
-      this,
-    );
-  }
 }
 
-abstract class _BankAccount implements BankAccount {
-  const factory _BankAccount(
-      {required final String bank,
-      required final String nomorRekening,
-      required final String atasNama}) = _$BankAccountImpl;
 
-  factory _BankAccount.fromJson(Map<String, dynamic> json) =
-      _$BankAccountImpl.fromJson;
-
-  @override
-  String get bank;
-  @override
-  String get nomorRekening;
-  @override
-  String get atasNama;
-  @override
-  @JsonKey(ignore: true)
-  _$$BankAccountImplCopyWith<_$BankAccountImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
-Vendor _$VendorFromJson(Map<String, dynamic> json) {
-  return _Vendor.fromJson(json);
+/// @nodoc
+abstract mixin class _$BankAccountCopyWith<$Res> implements $BankAccountCopyWith<$Res> {
+  factory _$BankAccountCopyWith(_BankAccount value, $Res Function(_BankAccount) _then) = __$BankAccountCopyWithImpl;
+@override @useResult
+$Res call({
+ String bank, String nomorRekening, String atasNama
+});
+
+
+
+
 }
+/// @nodoc
+class __$BankAccountCopyWithImpl<$Res>
+    implements _$BankAccountCopyWith<$Res> {
+  __$BankAccountCopyWithImpl(this._self, this._then);
+
+  final _BankAccount _self;
+  final $Res Function(_BankAccount) _then;
+
+/// Create a copy of BankAccount
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? bank = null,Object? nomorRekening = null,Object? atasNama = null,}) {
+  return _then(_BankAccount(
+bank: null == bank ? _self.bank : bank // ignore: cast_nullable_to_non_nullable
+as String,nomorRekening: null == nomorRekening ? _self.nomorRekening : nomorRekening // ignore: cast_nullable_to_non_nullable
+as String,atasNama: null == atasNama ? _self.atasNama : atasNama // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 
 /// @nodoc
 mixin _$Vendor {
-  String get id => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  String get namaToko => throw _privateConstructorUsedError;
-  String get deskripsi => throw _privateConstructorUsedError;
-  String get logo => throw _privateConstructorUsedError;
-  String get alamat => throw _privateConstructorUsedError;
-  String get kota => throw _privateConstructorUsedError;
-  double get latitude => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
-  String get kontak => throw _privateConstructorUsedError;
-  String get jamOperasional => throw _privateConstructorUsedError;
-  String get statusVerifikasi =>
-      throw _privateConstructorUsedError; // 'menunggu' | 'aktif' | 'ditolak' | 'ditangguhkan'
-  String? get alasanTolak => throw _privateConstructorUsedError;
-  BankAccount get rekening => throw _privateConstructorUsedError;
-  int get tarifDendaPerHari => throw _privateConstructorUsedError;
-  int get persenDeposit => throw _privateConstructorUsedError;
-  String get kebijakanBatal => throw _privateConstructorUsedError;
-  List<String> get opsiPengambilan =>
-      throw _privateConstructorUsedError; // ['ambil_di_toko', 'diantar']
-  int get biayaAntarPerKm => throw _privateConstructorUsedError;
-  double get radiusAntarMaxKm => throw _privateConstructorUsedError;
-  double get ratingRata => throw _privateConstructorUsedError;
-  int get totalReview => throw _privateConstructorUsedError;
-  String get createdAt => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $VendorCopyWith<Vendor> get copyWith => throw _privateConstructorUsedError;
+ String get id; String get userId; String get namaToko; String get deskripsi; String get logo; String get alamat; String get kota; double get latitude; double get longitude; String get kontak; String get jamOperasional; String get statusVerifikasi; String? get alasanTolak; BankAccount get rekening; int get tarifDendaPerHari; int get persenDeposit; String get kebijakanBatal; List<String> get opsiPengambilan; int get biayaAntarPerKm; double get radiusAntarMaxKm; double get ratingRata; int get totalReview; String get createdAt;
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$VendorCopyWith<Vendor> get copyWith => _$VendorCopyWithImpl<Vendor>(this as Vendor, _$identity);
+
+  /// Serializes this Vendor to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as Vendor;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Vendor&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.namaToko, _this.namaToko) || other.namaToko == _this.namaToko)&&(identical(other.deskripsi, _this.deskripsi) || other.deskripsi == _this.deskripsi)&&(identical(other.logo, _this.logo) || other.logo == _this.logo)&&(identical(other.alamat, _this.alamat) || other.alamat == _this.alamat)&&(identical(other.kota, _this.kota) || other.kota == _this.kota)&&(identical(other.latitude, _this.latitude) || other.latitude == _this.latitude)&&(identical(other.longitude, _this.longitude) || other.longitude == _this.longitude)&&(identical(other.kontak, _this.kontak) || other.kontak == _this.kontak)&&(identical(other.jamOperasional, _this.jamOperasional) || other.jamOperasional == _this.jamOperasional)&&(identical(other.statusVerifikasi, _this.statusVerifikasi) || other.statusVerifikasi == _this.statusVerifikasi)&&(identical(other.alasanTolak, _this.alasanTolak) || other.alasanTolak == _this.alasanTolak)&&(identical(other.rekening, _this.rekening) || other.rekening == _this.rekening)&&(identical(other.tarifDendaPerHari, _this.tarifDendaPerHari) || other.tarifDendaPerHari == _this.tarifDendaPerHari)&&(identical(other.persenDeposit, _this.persenDeposit) || other.persenDeposit == _this.persenDeposit)&&(identical(other.kebijakanBatal, _this.kebijakanBatal) || other.kebijakanBatal == _this.kebijakanBatal)&&const DeepCollectionEquality().equals(other.opsiPengambilan, _this.opsiPengambilan)&&(identical(other.biayaAntarPerKm, _this.biayaAntarPerKm) || other.biayaAntarPerKm == _this.biayaAntarPerKm)&&(identical(other.radiusAntarMaxKm, _this.radiusAntarMaxKm) || other.radiusAntarMaxKm == _this.radiusAntarMaxKm)&&(identical(other.ratingRata, _this.ratingRata) || other.ratingRata == _this.ratingRata)&&(identical(other.totalReview, _this.totalReview) || other.totalReview == _this.totalReview)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as Vendor;
+  return Object.hashAll([runtimeType,_this.id,_this.userId,_this.namaToko,_this.deskripsi,_this.logo,_this.alamat,_this.kota,_this.latitude,_this.longitude,_this.kontak,_this.jamOperasional,_this.statusVerifikasi,_this.alasanTolak,_this.rekening,_this.tarifDendaPerHari,_this.persenDeposit,_this.kebijakanBatal,const DeepCollectionEquality().hash(_this.opsiPengambilan),_this.biayaAntarPerKm,_this.radiusAntarMaxKm,_this.ratingRata,_this.totalReview,_this.createdAt]);
+}
+
+@override
+String toString() {
+  final _this = this as Vendor;
+  return 'Vendor(id: ${_this.id}, userId: ${_this.userId}, namaToko: ${_this.namaToko}, deskripsi: ${_this.deskripsi}, logo: ${_this.logo}, alamat: ${_this.alamat}, kota: ${_this.kota}, latitude: ${_this.latitude}, longitude: ${_this.longitude}, kontak: ${_this.kontak}, jamOperasional: ${_this.jamOperasional}, statusVerifikasi: ${_this.statusVerifikasi}, alasanTolak: ${_this.alasanTolak}, rekening: ${_this.rekening}, tarifDendaPerHari: ${_this.tarifDendaPerHari}, persenDeposit: ${_this.persenDeposit}, kebijakanBatal: ${_this.kebijakanBatal}, opsiPengambilan: ${_this.opsiPengambilan}, biayaAntarPerKm: ${_this.biayaAntarPerKm}, radiusAntarMaxKm: ${_this.radiusAntarMaxKm}, ratingRata: ${_this.ratingRata}, totalReview: ${_this.totalReview}, createdAt: ${_this.createdAt})';
+}
+
+
 }
 
 /// @nodoc
-abstract class $VendorCopyWith<$Res> {
-  factory $VendorCopyWith(Vendor value, $Res Function(Vendor) then) =
-      _$VendorCopyWithImpl<$Res, Vendor>;
-  @useResult
-  $Res call(
-      {String id,
-      String userId,
-      String namaToko,
-      String deskripsi,
-      String logo,
-      String alamat,
-      String kota,
-      double latitude,
-      double longitude,
-      String kontak,
-      String jamOperasional,
-      String statusVerifikasi,
-      String? alasanTolak,
-      BankAccount rekening,
-      int tarifDendaPerHari,
-      int persenDeposit,
-      String kebijakanBatal,
-      List<String> opsiPengambilan,
-      int biayaAntarPerKm,
-      double radiusAntarMaxKm,
-      double ratingRata,
-      int totalReview,
-      String createdAt});
+abstract mixin class $VendorCopyWith<$Res>  {
+  factory $VendorCopyWith(Vendor value, $Res Function(Vendor) _then) = _$VendorCopyWithImpl;
+@useResult
+$Res call({
+ String id, String userId, String namaToko, String deskripsi, String logo, String alamat, String kota, double latitude, double longitude, String kontak, String jamOperasional, String statusVerifikasi, String? alasanTolak, BankAccount rekening, int tarifDendaPerHari, int persenDeposit, String kebijakanBatal, List<String> opsiPengambilan, int biayaAntarPerKm, double radiusAntarMaxKm, double ratingRata, int totalReview, String createdAt
+});
 
-  $BankAccountCopyWith<$Res> get rekening;
+
+$BankAccountCopyWith<$Res> get rekening;
+
 }
-
 /// @nodoc
-class _$VendorCopyWithImpl<$Res, $Val extends Vendor>
+class _$VendorCopyWithImpl<$Res>
     implements $VendorCopyWith<$Res> {
-  _$VendorCopyWithImpl(this._value, this._then);
+  _$VendorCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Vendor _self;
+  final $Res Function(Vendor) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? namaToko = null,
-    Object? deskripsi = null,
-    Object? logo = null,
-    Object? alamat = null,
-    Object? kota = null,
-    Object? latitude = null,
-    Object? longitude = null,
-    Object? kontak = null,
-    Object? jamOperasional = null,
-    Object? statusVerifikasi = null,
-    Object? alasanTolak = freezed,
-    Object? rekening = null,
-    Object? tarifDendaPerHari = null,
-    Object? persenDeposit = null,
-    Object? kebijakanBatal = null,
-    Object? opsiPengambilan = null,
-    Object? biayaAntarPerKm = null,
-    Object? radiusAntarMaxKm = null,
-    Object? ratingRata = null,
-    Object? totalReview = null,
-    Object? createdAt = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      namaToko: null == namaToko
-          ? _value.namaToko
-          : namaToko // ignore: cast_nullable_to_non_nullable
-              as String,
-      deskripsi: null == deskripsi
-          ? _value.deskripsi
-          : deskripsi // ignore: cast_nullable_to_non_nullable
-              as String,
-      logo: null == logo
-          ? _value.logo
-          : logo // ignore: cast_nullable_to_non_nullable
-              as String,
-      alamat: null == alamat
-          ? _value.alamat
-          : alamat // ignore: cast_nullable_to_non_nullable
-              as String,
-      kota: null == kota
-          ? _value.kota
-          : kota // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      kontak: null == kontak
-          ? _value.kontak
-          : kontak // ignore: cast_nullable_to_non_nullable
-              as String,
-      jamOperasional: null == jamOperasional
-          ? _value.jamOperasional
-          : jamOperasional // ignore: cast_nullable_to_non_nullable
-              as String,
-      statusVerifikasi: null == statusVerifikasi
-          ? _value.statusVerifikasi
-          : statusVerifikasi // ignore: cast_nullable_to_non_nullable
-              as String,
-      alasanTolak: freezed == alasanTolak
-          ? _value.alasanTolak
-          : alasanTolak // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rekening: null == rekening
-          ? _value.rekening
-          : rekening // ignore: cast_nullable_to_non_nullable
-              as BankAccount,
-      tarifDendaPerHari: null == tarifDendaPerHari
-          ? _value.tarifDendaPerHari
-          : tarifDendaPerHari // ignore: cast_nullable_to_non_nullable
-              as int,
-      persenDeposit: null == persenDeposit
-          ? _value.persenDeposit
-          : persenDeposit // ignore: cast_nullable_to_non_nullable
-              as int,
-      kebijakanBatal: null == kebijakanBatal
-          ? _value.kebijakanBatal
-          : kebijakanBatal // ignore: cast_nullable_to_non_nullable
-              as String,
-      opsiPengambilan: null == opsiPengambilan
-          ? _value.opsiPengambilan
-          : opsiPengambilan // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      biayaAntarPerKm: null == biayaAntarPerKm
-          ? _value.biayaAntarPerKm
-          : biayaAntarPerKm // ignore: cast_nullable_to_non_nullable
-              as int,
-      radiusAntarMaxKm: null == radiusAntarMaxKm
-          ? _value.radiusAntarMaxKm
-          : radiusAntarMaxKm // ignore: cast_nullable_to_non_nullable
-              as double,
-      ratingRata: null == ratingRata
-          ? _value.ratingRata
-          : ratingRata // ignore: cast_nullable_to_non_nullable
-              as double,
-      totalReview: null == totalReview
-          ? _value.totalReview
-          : totalReview // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $BankAccountCopyWith<$Res> get rekening {
-    return $BankAccountCopyWith<$Res>(_value.rekening, (value) {
-      return _then(_value.copyWith(rekening: value) as $Val);
-    });
-  }
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? namaToko = null,Object? deskripsi = null,Object? logo = null,Object? alamat = null,Object? kota = null,Object? latitude = null,Object? longitude = null,Object? kontak = null,Object? jamOperasional = null,Object? statusVerifikasi = null,Object? alasanTolak = freezed,Object? rekening = null,Object? tarifDendaPerHari = null,Object? persenDeposit = null,Object? kebijakanBatal = null,Object? opsiPengambilan = null,Object? biayaAntarPerKm = null,Object? radiusAntarMaxKm = null,Object? ratingRata = null,Object? totalReview = null,Object? createdAt = null,}) {
+  return _then(Vendor(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,namaToko: null == namaToko ? _self.namaToko : namaToko // ignore: cast_nullable_to_non_nullable
+as String,deskripsi: null == deskripsi ? _self.deskripsi : deskripsi // ignore: cast_nullable_to_non_nullable
+as String,logo: null == logo ? _self.logo : logo // ignore: cast_nullable_to_non_nullable
+as String,alamat: null == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
+as String,kota: null == kota ? _self.kota : kota // ignore: cast_nullable_to_non_nullable
+as String,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double,kontak: null == kontak ? _self.kontak : kontak // ignore: cast_nullable_to_non_nullable
+as String,jamOperasional: null == jamOperasional ? _self.jamOperasional : jamOperasional // ignore: cast_nullable_to_non_nullable
+as String,statusVerifikasi: null == statusVerifikasi ? _self.statusVerifikasi : statusVerifikasi // ignore: cast_nullable_to_non_nullable
+as String,alasanTolak: freezed == alasanTolak ? _self.alasanTolak : alasanTolak // ignore: cast_nullable_to_non_nullable
+as String?,rekening: null == rekening ? _self.rekening : rekening // ignore: cast_nullable_to_non_nullable
+as BankAccount,tarifDendaPerHari: null == tarifDendaPerHari ? _self.tarifDendaPerHari : tarifDendaPerHari // ignore: cast_nullable_to_non_nullable
+as int,persenDeposit: null == persenDeposit ? _self.persenDeposit : persenDeposit // ignore: cast_nullable_to_non_nullable
+as int,kebijakanBatal: null == kebijakanBatal ? _self.kebijakanBatal : kebijakanBatal // ignore: cast_nullable_to_non_nullable
+as String,opsiPengambilan: null == opsiPengambilan ? _self.opsiPengambilan : opsiPengambilan // ignore: cast_nullable_to_non_nullable
+as List<String>,biayaAntarPerKm: null == biayaAntarPerKm ? _self.biayaAntarPerKm : biayaAntarPerKm // ignore: cast_nullable_to_non_nullable
+as int,radiusAntarMaxKm: null == radiusAntarMaxKm ? _self.radiusAntarMaxKm : radiusAntarMaxKm // ignore: cast_nullable_to_non_nullable
+as double,ratingRata: null == ratingRata ? _self.ratingRata : ratingRata // ignore: cast_nullable_to_non_nullable
+as double,totalReview: null == totalReview ? _self.totalReview : totalReview // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BankAccountCopyWith<$Res> get rekening {
+  
+  return $BankAccountCopyWith<$Res>(_self.rekening, (value) {
+    return _then(_self.copyWith(rekening: value));
+  });
+}
 }
 
-/// @nodoc
-abstract class _$$VendorImplCopyWith<$Res> implements $VendorCopyWith<$Res> {
-  factory _$$VendorImplCopyWith(
-          _$VendorImpl value, $Res Function(_$VendorImpl) then) =
-      __$$VendorImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String userId,
-      String namaToko,
-      String deskripsi,
-      String logo,
-      String alamat,
-      String kota,
-      double latitude,
-      double longitude,
-      String kontak,
-      String jamOperasional,
-      String statusVerifikasi,
-      String? alasanTolak,
-      BankAccount rekening,
-      int tarifDendaPerHari,
-      int persenDeposit,
-      String kebijakanBatal,
-      List<String> opsiPengambilan,
-      int biayaAntarPerKm,
-      double radiusAntarMaxKm,
-      double ratingRata,
-      int totalReview,
-      String createdAt});
 
-  @override
-  $BankAccountCopyWith<$Res> get rekening;
+/// Adds pattern-matching-related methods to [Vendor].
+extension VendorPatterns on Vendor {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Vendor value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Vendor() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Vendor value)  $default,){
+final _that = this;
+switch (_that) {
+case _Vendor():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Vendor value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Vendor() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String namaToko,  String deskripsi,  String logo,  String alamat,  String kota,  double latitude,  double longitude,  String kontak,  String jamOperasional,  String statusVerifikasi,  String? alasanTolak,  BankAccount rekening,  int tarifDendaPerHari,  int persenDeposit,  String kebijakanBatal,  List<String> opsiPengambilan,  int biayaAntarPerKm,  double radiusAntarMaxKm,  double ratingRata,  int totalReview,  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Vendor() when $default != null:
+return $default(_that.id,_that.userId,_that.namaToko,_that.deskripsi,_that.logo,_that.alamat,_that.kota,_that.latitude,_that.longitude,_that.kontak,_that.jamOperasional,_that.statusVerifikasi,_that.alasanTolak,_that.rekening,_that.tarifDendaPerHari,_that.persenDeposit,_that.kebijakanBatal,_that.opsiPengambilan,_that.biayaAntarPerKm,_that.radiusAntarMaxKm,_that.ratingRata,_that.totalReview,_that.createdAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String namaToko,  String deskripsi,  String logo,  String alamat,  String kota,  double latitude,  double longitude,  String kontak,  String jamOperasional,  String statusVerifikasi,  String? alasanTolak,  BankAccount rekening,  int tarifDendaPerHari,  int persenDeposit,  String kebijakanBatal,  List<String> opsiPengambilan,  int biayaAntarPerKm,  double radiusAntarMaxKm,  double ratingRata,  int totalReview,  String createdAt)  $default,) {final _that = this;
+switch (_that) {
+case _Vendor():
+return $default(_that.id,_that.userId,_that.namaToko,_that.deskripsi,_that.logo,_that.alamat,_that.kota,_that.latitude,_that.longitude,_that.kontak,_that.jamOperasional,_that.statusVerifikasi,_that.alasanTolak,_that.rekening,_that.tarifDendaPerHari,_that.persenDeposit,_that.kebijakanBatal,_that.opsiPengambilan,_that.biayaAntarPerKm,_that.radiusAntarMaxKm,_that.ratingRata,_that.totalReview,_that.createdAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String namaToko,  String deskripsi,  String logo,  String alamat,  String kota,  double latitude,  double longitude,  String kontak,  String jamOperasional,  String statusVerifikasi,  String? alasanTolak,  BankAccount rekening,  int tarifDendaPerHari,  int persenDeposit,  String kebijakanBatal,  List<String> opsiPengambilan,  int biayaAntarPerKm,  double radiusAntarMaxKm,  double ratingRata,  int totalReview,  String createdAt)?  $default,) {final _that = this;
+switch (_that) {
+case _Vendor() when $default != null:
+return $default(_that.id,_that.userId,_that.namaToko,_that.deskripsi,_that.logo,_that.alamat,_that.kota,_that.latitude,_that.longitude,_that.kontak,_that.jamOperasional,_that.statusVerifikasi,_that.alasanTolak,_that.rekening,_that.tarifDendaPerHari,_that.persenDeposit,_that.kebijakanBatal,_that.opsiPengambilan,_that.biayaAntarPerKm,_that.radiusAntarMaxKm,_that.ratingRata,_that.totalReview,_that.createdAt);case _:
+  return null;
+
+}
 }
 
-/// @nodoc
-class __$$VendorImplCopyWithImpl<$Res>
-    extends _$VendorCopyWithImpl<$Res, _$VendorImpl>
-    implements _$$VendorImplCopyWith<$Res> {
-  __$$VendorImplCopyWithImpl(
-      _$VendorImpl _value, $Res Function(_$VendorImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? userId = null,
-    Object? namaToko = null,
-    Object? deskripsi = null,
-    Object? logo = null,
-    Object? alamat = null,
-    Object? kota = null,
-    Object? latitude = null,
-    Object? longitude = null,
-    Object? kontak = null,
-    Object? jamOperasional = null,
-    Object? statusVerifikasi = null,
-    Object? alasanTolak = freezed,
-    Object? rekening = null,
-    Object? tarifDendaPerHari = null,
-    Object? persenDeposit = null,
-    Object? kebijakanBatal = null,
-    Object? opsiPengambilan = null,
-    Object? biayaAntarPerKm = null,
-    Object? radiusAntarMaxKm = null,
-    Object? ratingRata = null,
-    Object? totalReview = null,
-    Object? createdAt = null,
-  }) {
-    return _then(_$VendorImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      namaToko: null == namaToko
-          ? _value.namaToko
-          : namaToko // ignore: cast_nullable_to_non_nullable
-              as String,
-      deskripsi: null == deskripsi
-          ? _value.deskripsi
-          : deskripsi // ignore: cast_nullable_to_non_nullable
-              as String,
-      logo: null == logo
-          ? _value.logo
-          : logo // ignore: cast_nullable_to_non_nullable
-              as String,
-      alamat: null == alamat
-          ? _value.alamat
-          : alamat // ignore: cast_nullable_to_non_nullable
-              as String,
-      kota: null == kota
-          ? _value.kota
-          : kota // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      kontak: null == kontak
-          ? _value.kontak
-          : kontak // ignore: cast_nullable_to_non_nullable
-              as String,
-      jamOperasional: null == jamOperasional
-          ? _value.jamOperasional
-          : jamOperasional // ignore: cast_nullable_to_non_nullable
-              as String,
-      statusVerifikasi: null == statusVerifikasi
-          ? _value.statusVerifikasi
-          : statusVerifikasi // ignore: cast_nullable_to_non_nullable
-              as String,
-      alasanTolak: freezed == alasanTolak
-          ? _value.alasanTolak
-          : alasanTolak // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rekening: null == rekening
-          ? _value.rekening
-          : rekening // ignore: cast_nullable_to_non_nullable
-              as BankAccount,
-      tarifDendaPerHari: null == tarifDendaPerHari
-          ? _value.tarifDendaPerHari
-          : tarifDendaPerHari // ignore: cast_nullable_to_non_nullable
-              as int,
-      persenDeposit: null == persenDeposit
-          ? _value.persenDeposit
-          : persenDeposit // ignore: cast_nullable_to_non_nullable
-              as int,
-      kebijakanBatal: null == kebijakanBatal
-          ? _value.kebijakanBatal
-          : kebijakanBatal // ignore: cast_nullable_to_non_nullable
-              as String,
-      opsiPengambilan: null == opsiPengambilan
-          ? _value._opsiPengambilan
-          : opsiPengambilan // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      biayaAntarPerKm: null == biayaAntarPerKm
-          ? _value.biayaAntarPerKm
-          : biayaAntarPerKm // ignore: cast_nullable_to_non_nullable
-              as int,
-      radiusAntarMaxKm: null == radiusAntarMaxKm
-          ? _value.radiusAntarMaxKm
-          : radiusAntarMaxKm // ignore: cast_nullable_to_non_nullable
-              as double,
-      ratingRata: null == ratingRata
-          ? _value.ratingRata
-          : ratingRata // ignore: cast_nullable_to_non_nullable
-              as double,
-      totalReview: null == totalReview
-          ? _value.totalReview
-          : totalReview // ignore: cast_nullable_to_non_nullable
-              as int,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$VendorImpl implements _Vendor {
-  const _$VendorImpl(
-      {required this.id,
-      required this.userId,
-      required this.namaToko,
-      required this.deskripsi,
-      required this.logo,
-      required this.alamat,
-      required this.kota,
-      required this.latitude,
-      required this.longitude,
-      required this.kontak,
-      required this.jamOperasional,
-      required this.statusVerifikasi,
-      this.alasanTolak,
-      required this.rekening,
-      required this.tarifDendaPerHari,
-      required this.persenDeposit,
-      required this.kebijakanBatal,
-      required final List<String> opsiPengambilan,
-      required this.biayaAntarPerKm,
-      required this.radiusAntarMaxKm,
-      required this.ratingRata,
-      required this.totalReview,
-      required this.createdAt})
-      : _opsiPengambilan = opsiPengambilan;
 
-  factory _$VendorImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VendorImplFromJson(json);
+class _Vendor implements Vendor {
+  const _Vendor({required this.id, required this.userId, required this.namaToko, required this.deskripsi, required this.logo, required this.alamat, required this.kota, required this.latitude, required this.longitude, required this.kontak, required this.jamOperasional, required this.statusVerifikasi, this.alasanTolak, required this.rekening, required this.tarifDendaPerHari, required this.persenDeposit, required this.kebijakanBatal, required  List<String> opsiPengambilan, required this.biayaAntarPerKm, required this.radiusAntarMaxKm, required this.ratingRata, required this.totalReview, required this.createdAt}): _opsiPengambilan = opsiPengambilan;
+  factory _Vendor.fromJson(Map<String, dynamic> json) => _$VendorFromJson(json);
 
-  @override
-  final String id;
-  @override
-  final String userId;
-  @override
-  final String namaToko;
-  @override
-  final String deskripsi;
-  @override
-  final String logo;
-  @override
-  final String alamat;
-  @override
-  final String kota;
-  @override
-  final double latitude;
-  @override
-  final double longitude;
-  @override
-  final String kontak;
-  @override
-  final String jamOperasional;
-  @override
-  final String statusVerifikasi;
-// 'menunggu' | 'aktif' | 'ditolak' | 'ditangguhkan'
-  @override
-  final String? alasanTolak;
-  @override
-  final BankAccount rekening;
-  @override
-  final int tarifDendaPerHari;
-  @override
-  final int persenDeposit;
-  @override
-  final String kebijakanBatal;
-  final List<String> _opsiPengambilan;
-  @override
-  List<String> get opsiPengambilan {
-    if (_opsiPengambilan is EqualUnmodifiableListView) return _opsiPengambilan;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_opsiPengambilan);
-  }
+@override final  String id;
+@override final  String userId;
+@override final  String namaToko;
+@override final  String deskripsi;
+@override final  String logo;
+@override final  String alamat;
+@override final  String kota;
+@override final  double latitude;
+@override final  double longitude;
+@override final  String kontak;
+@override final  String jamOperasional;
+@override final  String statusVerifikasi;
+@override final  String? alasanTolak;
+@override final  BankAccount rekening;
+@override final  int tarifDendaPerHari;
+@override final  int persenDeposit;
+@override final  String kebijakanBatal;
+ final  List<String> _opsiPengambilan;
+@override List<String> get opsiPengambilan {
+  if (_opsiPengambilan is EqualUnmodifiableListView) return _opsiPengambilan;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_opsiPengambilan);
+}
 
-// ['ambil_di_toko', 'diantar']
-  @override
-  final int biayaAntarPerKm;
-  @override
-  final double radiusAntarMaxKm;
-  @override
-  final double ratingRata;
-  @override
-  final int totalReview;
-  @override
-  final String createdAt;
+@override final  int biayaAntarPerKm;
+@override final  double radiusAntarMaxKm;
+@override final  double ratingRata;
+@override final  int totalReview;
+@override final  String createdAt;
 
-  @override
-  String toString() {
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$VendorCopyWith<_Vendor> get copyWith => __$VendorCopyWithImpl<_Vendor>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$VendorToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Vendor&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.namaToko, namaToko) || other.namaToko == namaToko)&&(identical(other.deskripsi, deskripsi) || other.deskripsi == deskripsi)&&(identical(other.logo, logo) || other.logo == logo)&&(identical(other.alamat, alamat) || other.alamat == alamat)&&(identical(other.kota, kota) || other.kota == kota)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.kontak, kontak) || other.kontak == kontak)&&(identical(other.jamOperasional, jamOperasional) || other.jamOperasional == jamOperasional)&&(identical(other.statusVerifikasi, statusVerifikasi) || other.statusVerifikasi == statusVerifikasi)&&(identical(other.alasanTolak, alasanTolak) || other.alasanTolak == alasanTolak)&&(identical(other.rekening, rekening) || other.rekening == rekening)&&(identical(other.tarifDendaPerHari, tarifDendaPerHari) || other.tarifDendaPerHari == tarifDendaPerHari)&&(identical(other.persenDeposit, persenDeposit) || other.persenDeposit == persenDeposit)&&(identical(other.kebijakanBatal, kebijakanBatal) || other.kebijakanBatal == kebijakanBatal)&&const DeepCollectionEquality().equals(other.opsiPengambilan, _opsiPengambilan)&&(identical(other.biayaAntarPerKm, biayaAntarPerKm) || other.biayaAntarPerKm == biayaAntarPerKm)&&(identical(other.radiusAntarMaxKm, radiusAntarMaxKm) || other.radiusAntarMaxKm == radiusAntarMaxKm)&&(identical(other.ratingRata, ratingRata) || other.ratingRata == ratingRata)&&(identical(other.totalReview, totalReview) || other.totalReview == totalReview)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hashAll([runtimeType,id,userId,namaToko,deskripsi,logo,alamat,kota,latitude,longitude,kontak,jamOperasional,statusVerifikasi,alasanTolak,rekening,tarifDendaPerHari,persenDeposit,kebijakanBatal,const DeepCollectionEquality().hash(_opsiPengambilan),biayaAntarPerKm,radiusAntarMaxKm,ratingRata,totalReview,createdAt]);
+}
+
+@override
+String toString() {
     return 'Vendor(id: $id, userId: $userId, namaToko: $namaToko, deskripsi: $deskripsi, logo: $logo, alamat: $alamat, kota: $kota, latitude: $latitude, longitude: $longitude, kontak: $kontak, jamOperasional: $jamOperasional, statusVerifikasi: $statusVerifikasi, alasanTolak: $alasanTolak, rekening: $rekening, tarifDendaPerHari: $tarifDendaPerHari, persenDeposit: $persenDeposit, kebijakanBatal: $kebijakanBatal, opsiPengambilan: $opsiPengambilan, biayaAntarPerKm: $biayaAntarPerKm, radiusAntarMaxKm: $radiusAntarMaxKm, ratingRata: $ratingRata, totalReview: $totalReview, createdAt: $createdAt)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$VendorImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.namaToko, namaToko) ||
-                other.namaToko == namaToko) &&
-            (identical(other.deskripsi, deskripsi) ||
-                other.deskripsi == deskripsi) &&
-            (identical(other.logo, logo) || other.logo == logo) &&
-            (identical(other.alamat, alamat) || other.alamat == alamat) &&
-            (identical(other.kota, kota) || other.kota == kota) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.kontak, kontak) || other.kontak == kontak) &&
-            (identical(other.jamOperasional, jamOperasional) ||
-                other.jamOperasional == jamOperasional) &&
-            (identical(other.statusVerifikasi, statusVerifikasi) ||
-                other.statusVerifikasi == statusVerifikasi) &&
-            (identical(other.alasanTolak, alasanTolak) ||
-                other.alasanTolak == alasanTolak) &&
-            (identical(other.rekening, rekening) ||
-                other.rekening == rekening) &&
-            (identical(other.tarifDendaPerHari, tarifDendaPerHari) ||
-                other.tarifDendaPerHari == tarifDendaPerHari) &&
-            (identical(other.persenDeposit, persenDeposit) ||
-                other.persenDeposit == persenDeposit) &&
-            (identical(other.kebijakanBatal, kebijakanBatal) ||
-                other.kebijakanBatal == kebijakanBatal) &&
-            const DeepCollectionEquality()
-                .equals(other._opsiPengambilan, _opsiPengambilan) &&
-            (identical(other.biayaAntarPerKm, biayaAntarPerKm) ||
-                other.biayaAntarPerKm == biayaAntarPerKm) &&
-            (identical(other.radiusAntarMaxKm, radiusAntarMaxKm) ||
-                other.radiusAntarMaxKm == radiusAntarMaxKm) &&
-            (identical(other.ratingRata, ratingRata) ||
-                other.ratingRata == ratingRata) &&
-            (identical(other.totalReview, totalReview) ||
-                other.totalReview == totalReview) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        userId,
-        namaToko,
-        deskripsi,
-        logo,
-        alamat,
-        kota,
-        latitude,
-        longitude,
-        kontak,
-        jamOperasional,
-        statusVerifikasi,
-        alasanTolak,
-        rekening,
-        tarifDendaPerHari,
-        persenDeposit,
-        kebijakanBatal,
-        const DeepCollectionEquality().hash(_opsiPengambilan),
-        biayaAntarPerKm,
-        radiusAntarMaxKm,
-        ratingRata,
-        totalReview,
-        createdAt
-      ]);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$VendorImplCopyWith<_$VendorImpl> get copyWith =>
-      __$$VendorImplCopyWithImpl<_$VendorImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$VendorImplToJson(
-      this,
-    );
-  }
 }
 
-abstract class _Vendor implements Vendor {
-  const factory _Vendor(
-      {required final String id,
-      required final String userId,
-      required final String namaToko,
-      required final String deskripsi,
-      required final String logo,
-      required final String alamat,
-      required final String kota,
-      required final double latitude,
-      required final double longitude,
-      required final String kontak,
-      required final String jamOperasional,
-      required final String statusVerifikasi,
-      final String? alasanTolak,
-      required final BankAccount rekening,
-      required final int tarifDendaPerHari,
-      required final int persenDeposit,
-      required final String kebijakanBatal,
-      required final List<String> opsiPengambilan,
-      required final int biayaAntarPerKm,
-      required final double radiusAntarMaxKm,
-      required final double ratingRata,
-      required final int totalReview,
-      required final String createdAt}) = _$VendorImpl;
 
-  factory _Vendor.fromJson(Map<String, dynamic> json) = _$VendorImpl.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get userId;
-  @override
-  String get namaToko;
-  @override
-  String get deskripsi;
-  @override
-  String get logo;
-  @override
-  String get alamat;
-  @override
-  String get kota;
-  @override
-  double get latitude;
-  @override
-  double get longitude;
-  @override
-  String get kontak;
-  @override
-  String get jamOperasional;
-  @override
-  String get statusVerifikasi;
-  @override // 'menunggu' | 'aktif' | 'ditolak' | 'ditangguhkan'
-  String? get alasanTolak;
-  @override
-  BankAccount get rekening;
-  @override
-  int get tarifDendaPerHari;
-  @override
-  int get persenDeposit;
-  @override
-  String get kebijakanBatal;
-  @override
-  List<String> get opsiPengambilan;
-  @override // ['ambil_di_toko', 'diantar']
-  int get biayaAntarPerKm;
-  @override
-  double get radiusAntarMaxKm;
-  @override
-  double get ratingRata;
-  @override
-  int get totalReview;
-  @override
-  String get createdAt;
-  @override
-  @JsonKey(ignore: true)
-  _$$VendorImplCopyWith<_$VendorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+abstract mixin class _$VendorCopyWith<$Res> implements $VendorCopyWith<$Res> {
+  factory _$VendorCopyWith(_Vendor value, $Res Function(_Vendor) _then) = __$VendorCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String userId, String namaToko, String deskripsi, String logo, String alamat, String kota, double latitude, double longitude, String kontak, String jamOperasional, String statusVerifikasi, String? alasanTolak, BankAccount rekening, int tarifDendaPerHari, int persenDeposit, String kebijakanBatal, List<String> opsiPengambilan, int biayaAntarPerKm, double radiusAntarMaxKm, double ratingRata, int totalReview, String createdAt
+});
+
+
+@override $BankAccountCopyWith<$Res> get rekening;
+
+}
+/// @nodoc
+class __$VendorCopyWithImpl<$Res>
+    implements _$VendorCopyWith<$Res> {
+  __$VendorCopyWithImpl(this._self, this._then);
+
+  final _Vendor _self;
+  final $Res Function(_Vendor) _then;
+
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? namaToko = null,Object? deskripsi = null,Object? logo = null,Object? alamat = null,Object? kota = null,Object? latitude = null,Object? longitude = null,Object? kontak = null,Object? jamOperasional = null,Object? statusVerifikasi = null,Object? alasanTolak = freezed,Object? rekening = null,Object? tarifDendaPerHari = null,Object? persenDeposit = null,Object? kebijakanBatal = null,Object? opsiPengambilan = null,Object? biayaAntarPerKm = null,Object? radiusAntarMaxKm = null,Object? ratingRata = null,Object? totalReview = null,Object? createdAt = null,}) {
+  return _then(_Vendor(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,namaToko: null == namaToko ? _self.namaToko : namaToko // ignore: cast_nullable_to_non_nullable
+as String,deskripsi: null == deskripsi ? _self.deskripsi : deskripsi // ignore: cast_nullable_to_non_nullable
+as String,logo: null == logo ? _self.logo : logo // ignore: cast_nullable_to_non_nullable
+as String,alamat: null == alamat ? _self.alamat : alamat // ignore: cast_nullable_to_non_nullable
+as String,kota: null == kota ? _self.kota : kota // ignore: cast_nullable_to_non_nullable
+as String,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double,kontak: null == kontak ? _self.kontak : kontak // ignore: cast_nullable_to_non_nullable
+as String,jamOperasional: null == jamOperasional ? _self.jamOperasional : jamOperasional // ignore: cast_nullable_to_non_nullable
+as String,statusVerifikasi: null == statusVerifikasi ? _self.statusVerifikasi : statusVerifikasi // ignore: cast_nullable_to_non_nullable
+as String,alasanTolak: freezed == alasanTolak ? _self.alasanTolak : alasanTolak // ignore: cast_nullable_to_non_nullable
+as String?,rekening: null == rekening ? _self.rekening : rekening // ignore: cast_nullable_to_non_nullable
+as BankAccount,tarifDendaPerHari: null == tarifDendaPerHari ? _self.tarifDendaPerHari : tarifDendaPerHari // ignore: cast_nullable_to_non_nullable
+as int,persenDeposit: null == persenDeposit ? _self.persenDeposit : persenDeposit // ignore: cast_nullable_to_non_nullable
+as int,kebijakanBatal: null == kebijakanBatal ? _self.kebijakanBatal : kebijakanBatal // ignore: cast_nullable_to_non_nullable
+as String,opsiPengambilan: null == opsiPengambilan ? _self._opsiPengambilan : opsiPengambilan // ignore: cast_nullable_to_non_nullable
+as List<String>,biayaAntarPerKm: null == biayaAntarPerKm ? _self.biayaAntarPerKm : biayaAntarPerKm // ignore: cast_nullable_to_non_nullable
+as int,radiusAntarMaxKm: null == radiusAntarMaxKm ? _self.radiusAntarMaxKm : radiusAntarMaxKm // ignore: cast_nullable_to_non_nullable
+as double,ratingRata: null == ratingRata ? _self.ratingRata : ratingRata // ignore: cast_nullable_to_non_nullable
+as double,totalReview: null == totalReview ? _self.totalReview : totalReview // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+/// Create a copy of Vendor
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BankAccountCopyWith<$Res> get rekening {
+  
+  return $BankAccountCopyWith<$Res>(_self.rekening, (value) {
+    return _then(_self.copyWith(rekening: value));
+  });
+}
+}
+
+// dart format on

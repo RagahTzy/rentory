@@ -2,11 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/format_utils.dart';
+import '../../core/utils/location_utils.dart';
+import '../../data/models/product.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
-import '../../presentation/product/product_detail_screen.dart';
 
 class ProductSearchScreen extends ConsumerStatefulWidget {
   const ProductSearchScreen({super.key});
@@ -41,8 +42,10 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     var products = ProductService.getAvailableProducts();
     
     // Search query
+    // (dulu memanggil searchProducts() yang menimpa filter "tersedia")
     if (_query.isNotEmpty) {
-      products = ProductService.searchProducts(_query);
+      final matchIds = ProductService.searchProducts(_query).map((p) => p.id).toSet();
+      products = products.where((p) => matchIds.contains(p.id)).toList();
     }
     
     // Category filter
@@ -75,11 +78,19 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
         products.sort((a, b) => b.hargaPerHari.compareTo(a.hargaPerHari));
         break;
       case 'jarak':
-        // Need vendor distance - simplified
+        products = products.where((p) => _distanceKm(p) <= _radiusKm).toList();
+        products.sort((a, b) => _distanceKm(a).compareTo(_distanceKm(b)));
         break;
     }
-    
+
     return products;
+  }
+
+  /// Jarak (km) dari lokasi user ke toko pemilik produk (Haversine).
+  double _distanceKm(Product product) {
+    final vendor = getVendorById(product.vendorId);
+    if (vendor == null) return double.infinity;
+    return haversineKm(_userLat, _userLng, vendor.latitude, vendor.longitude);
   }
 
   @override
@@ -97,9 +108,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Cari nama barang...',
-                prefixIcon: const Icon(PhosphorIcons.magnifyingGlass),
+                prefixIcon: const Icon(AppIcons.magnifyingGlass),
                 suffixIcon: _query.isNotEmpty
-                    ? IconButton(icon: const Icon(PhosphorIcons.x), onPressed: () {
+                    ? IconButton(icon: const Icon(AppIcons.x), onPressed: () {
                         _searchController.clear();
                         setState(() => _query = '');
                       })
@@ -126,19 +137,19 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               children: [
                 _FilterChip(
                   label: _selectedCategory,
-                  icon: PhosphorIcons.funnel,
+                  icon: AppIcons.funnel,
                   onTap: _showCategoryFilter,
                 ),
                 const SizedBox(width: 8),
                 _FilterChip(
                   label: '${formatCurrencyShort(_minPrice)} - ${formatCurrencyShort(_maxPrice)}',
-                  icon: PhosphorIcons.currencyCircleDollar,
+                  icon: AppIcons.currencyCircleDollar,
                   onTap: _showPriceFilter,
                 ),
                 const SizedBox(width: 8),
                 _FilterChip(
                   label: _sortBy == 'jarak' ? '${_radiusKm.toInt()}km' : _sortOptions[_sortValues.indexOf(_sortBy)],
-                  icon: _sortBy == 'jarak' ? PhosphorIcons.mapPin : PhosphorIcons.arrowsUpDown,
+                  icon: _sortBy == 'jarak' ? AppIcons.mapPin : AppIcons.arrowsDownUp,
                   onTap: _showSortFilter,
                 ),
               ],
@@ -180,8 +191,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               child: Container(
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 child: product.foto.isNotEmpty
-                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Icon(PhosphorIcons.image, size: 32, color: Colors.grey))
-                    : Icon(PhosphorIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
+                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.image, size: 32, color: Colors.grey))
+                    : Icon(AppIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
               ),
             ),
             Padding(
@@ -192,20 +203,20 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   Text(product.nama, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),
                   if (vendor != null)
-                    Text(vendor.namaToko, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(vendor.namaToko, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)), maxLines: 1, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      Icon(PhosphorIcons.star, size: 12, color: Colors.amber),
+                      Icon(AppIcons.star, size: 12, color: Colors.amber),
                       const SizedBox(width: 2),
                       Text('${product.ratingRata}', style: Theme.of(context).textTheme.bodySmall),
                       const SizedBox(width: 8),
-                      Text('${product.totalReview}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                      Text('${product.totalReview}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    formatCurrency(product.hargaPerHari) + '/hari',
+                    '${formatCurrency(product.hargaPerHari)}/hari',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Theme.of(context).colorScheme.primary,
@@ -225,11 +236,11 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(PhosphorIcons.magnifyingGlass, size: 64, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3)),
+          Icon(AppIcons.magnifyingGlass, size: 64, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
           const SizedBox(height: 16),
           Text('Tidak ada barang ditemukan', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
-          Text('Coba ubah filter atau kata kunci pencarian', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+          Text('Coba ubah filter atau kata kunci pencarian', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
         ],
       ),
     );
@@ -300,37 +311,52 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Urutkan', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 16),
-            ..._sortOptions.asMap().entries.map((e) => RadioListTile<String>(
-              title: Text(e.value),
-              value: _sortValues[e.key],
-              groupValue: _sortBy,
-              onChanged: (v) {
-                if (v != null) {
-                  setState(() => _sortBy = v);
-                  Navigator.pop(context);
-                }
-              },
-            )),
-            if (_sortBy == 'jarak') ...[
-              const SizedBox(height: 16),
-              Text('Radius: ${_radiusKm.toInt()} km'),
-              Slider(
-                value: _radiusKm,
-                min: 1,
-                max: 50,
-                divisions: 49,
-                onChanged: (v) => setState(() => _radiusKm = v),
-              ),
-            ],
-          ],
-        ),
+      // StatefulBuilder: bottom sheet punya state sendiri, jadi setState milik
+      // layar induk saja tidak cukup untuk menggerakkan slider radius.
+      builder: (context) => StatefulBuilder(
+        builder: (context, setSheetState) {
+          void update(VoidCallback fn) {
+            setState(fn);
+            setSheetState(() {});
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Urutkan', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(height: 16),
+                RadioGroup<String>(
+                  groupValue: _sortBy,
+                  onChanged: (v) {
+                    if (v == null) return;
+                    update(() => _sortBy = v);
+                    // Opsi "Terdekat" tetap membuka sheet agar radius bisa diatur.
+                    if (v != 'jarak') Navigator.pop(context);
+                  },
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < _sortOptions.length; i++)
+                        RadioListTile<String>(title: Text(_sortOptions[i]), value: _sortValues[i]),
+                    ],
+                  ),
+                ),
+                if (_sortBy == 'jarak') ...[
+                  const SizedBox(height: 16),
+                  Text('Radius: ${_radiusKm.toInt()} km'),
+                  Slider(
+                    value: _radiusKm,
+                    min: 1,
+                    max: 50,
+                    divisions: 49,
+                    onChanged: (v) => update(() => _radiusKm = v),
+                  ),
+                ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }

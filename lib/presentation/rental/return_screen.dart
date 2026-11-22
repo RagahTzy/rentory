@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class ReturnScreen extends StatelessWidget {
   final String rentalId;
@@ -14,7 +14,7 @@ class ReturnScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.arrowUTurnLeft, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.arrowUUpLeft, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Pengembalian Barang', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

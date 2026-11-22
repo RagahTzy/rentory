@@ -5,7 +5,7 @@ part 'vendor.freezed.dart';
 part 'vendor.g.dart';
 
 @freezed
-class BankAccount with _$BankAccount {
+abstract class BankAccount with _$BankAccount {
   const factory BankAccount({
     required String bank,
     required String nomorRekening,
@@ -16,7 +16,7 @@ class BankAccount with _$BankAccount {
 }
 
 @freezed
-class Vendor with _$Vendor {
+abstract class Vendor with _$Vendor {
   const factory Vendor({
     required String id,
     required String userId,

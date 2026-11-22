@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorProductsScreen extends StatelessWidget {
   const VendorProductsScreen({super.key});
@@ -9,13 +8,13 @@ class VendorProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Kelola Barang'), actions: [
-        IconButton(onPressed: () {}, icon: const Icon(PhosphorIcons.plus())),
+        IconButton(onPressed: () {}, icon: const Icon(AppIcons.plus)),
       ]),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.package(), size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.package, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Kelola Barang', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

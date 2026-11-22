@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorReviewsScreen extends StatelessWidget {
   const VendorReviewsScreen({super.key});
@@ -12,7 +12,7 @@ class VendorReviewsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.star, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.star, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Review & Rating', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

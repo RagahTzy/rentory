@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class StoreProfileScreen extends StatelessWidget {
   const StoreProfileScreen({super.key});
@@ -13,7 +13,7 @@ class StoreProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.storefront(), size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.storefront, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Profil Toko', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 24),

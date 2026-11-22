@@ -1,7 +1,7 @@
 // lib/presentation/auth/role_select_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class RoleSelectScreen extends StatelessWidget {
   const RoleSelectScreen({super.key});
@@ -17,7 +17,7 @@ class RoleSelectScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 40),
               Icon(
-                PhosphorIcons.package,
+                AppIcons.package,
                 size: 64,
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -31,7 +31,7 @@ class RoleSelectScreen extends StatelessWidget {
               Text(
                 'Pilih peran yang sesuai dengan kebutuhan Anda',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -39,7 +39,7 @@ class RoleSelectScreen extends StatelessWidget {
 
               // Penyewa Card
               _RoleCard(
-                icon: PhosphorIcons.user,
+                icon: AppIcons.user,
                 title: 'Penyewa',
                 subtitle: 'Cari & sewa barang dari berbagai toko',
                 features: ['Telusuri katalog lengkap', 'Booking & bayar online', 'Review & rating', 'Chat dengan pengusaha'],
@@ -50,7 +50,7 @@ class RoleSelectScreen extends StatelessWidget {
 
               // Pengusaha Card
               _RoleCard(
-                icon: PhosphorIcons.storefront,
+                icon: AppIcons.storefront,
                 title: 'Pengusaha Sewa',
                 subtitle: 'Buka toko & kelola sewa barang Anda',
                 features: ['Kelola barang & stok', 'Terima booking', 'Serah terima & pengembalian', 'Laporan penjualan'],
@@ -68,7 +68,7 @@ class RoleSelectScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(PhosphorIcons.info, color: Theme.of(context).colorScheme.primary),
+                    Icon(AppIcons.info, color: Theme.of(context).colorScheme.primary),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -122,7 +122,7 @@ class _RoleCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.1),
+                      color: color.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(icon, size: 28, color: color),
@@ -135,12 +135,12 @@ class _RoleCard extends StatelessWidget {
                         Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
                         Text(subtitle, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                         )),
                       ],
                     ),
                   ),
-                  Icon(PhosphorIcons.caretRight, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+                  Icon(AppIcons.caretRight, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5)),
                 ],
               ),
               const SizedBox(height: 16),
@@ -148,7 +148,7 @@ class _RoleCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Row(
                   children: [
-                    Icon(PhosphorIcons.checkCircle, size: 16, color: color),
+                    Icon(AppIcons.checkCircle, size: 16, color: color),
                     const SizedBox(width: 8),
                     Text(f, style: Theme.of(context).textTheme.bodyMedium),
                   ],

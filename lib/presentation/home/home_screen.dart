@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/format_utils.dart';
+import '../../core/utils/location_utils.dart';
+import '../../data/models/product.dart';
+import '../../data/models/vendor.dart';
 import '../../data/services/product_service.dart';
 import '../../data/mock/vendor_mock.dart';
-import '../../presentation/product/product_detail_screen.dart';
-import '../../presentation/product/product_search_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -51,15 +52,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         title: const Text('Rentory'),
         actions: [
           IconButton(
-            icon: const Icon(PhosphorIcons.magnifyingGlass),
+            icon: const Icon(AppIcons.magnifyingGlass),
             onPressed: () => context.go('/search'),
           ),
           IconButton(
-            icon: const Icon(PhosphorIcons.bell),
+            icon: const Icon(AppIcons.bell),
             onPressed: () => context.go('/notifications'),
           ),
           IconButton(
-            icon: const Icon(PhosphorIcons.user),
+            icon: const Icon(AppIcons.user),
             onPressed: () => context.go('/profile'),
           ),
         ],
@@ -69,10 +70,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
         items: const [
-          BottomNavigationBarItem(icon: Icon(PhosphorIcons.house), label: 'Beranda'),
-          BottomNavigationBarItem(icon: Icon(PhosphorIcons.gridFour), label: 'Kategori'),
-          BottomNavigationBarItem(icon: Icon(PhosphorIcons.bag), label: 'Sewa Saya'),
-          BottomNavigationBarItem(icon: Icon(PhosphorIcons.chatCircle), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(AppIcons.house), label: 'Beranda'),
+          BottomNavigationBarItem(icon: Icon(AppIcons.gridFour), label: 'Kategori'),
+          BottomNavigationBarItem(icon: Icon(AppIcons.bag), label: 'Sewa Saya'),
+          BottomNavigationBarItem(icon: Icon(AppIcons.chatCircle), label: 'Chat'),
         ],
       ),
     );
@@ -95,11 +96,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               child: Row(
                 children: [
-                  Icon(PhosphorIcons.magnifyingGlass, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+                  Icon(AppIcons.magnifyingGlass, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5)),
                   const SizedBox(width: 12),
                   Text(
                     'Cari barang, toko, atau kategori...',
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
                 ],
               ),
@@ -216,11 +217,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 80,
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: Center(
-                child: Icon(PhosphorIcons.storefront, size: 32, color: Theme.of(context).colorScheme.primary),
+            // Header mengisi sisa tinggi kartu (dulu fix 80px sehingga total
+            // isi > tinggi list 160px dan terjadi RenderFlex overflow).
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: Center(
+                  child: Icon(AppIcons.storefront, size: 32, color: Theme.of(context).colorScheme.primary),
+                ),
               ),
             ),
             Padding(
@@ -232,17 +237,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      Icon(PhosphorIcons.mapPin, size: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+                      Icon(AppIcons.mapPin, size: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
                       const SizedBox(width: 4),
-                      Text('${formatDistance(distance)} • ${vendor.kota}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                      Expanded(
+                        child: Text(
+                          '${formatDistance(distance)} • ${vendor.kota}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      Icon(PhosphorIcons.star, size: 12, color: Colors.amber),
+                      Icon(AppIcons.star, size: 12, color: Colors.amber),
                       const SizedBox(width: 4),
-                      Text('${vendor.ratingRata} (${vendor.totalReview})', style: Theme.of(context).textTheme.bodySmall),
+                      Expanded(
+                        child: Text(
+                          '${vendor.ratingRata} (${vendor.totalReview})',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -268,8 +287,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Container(
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 child: product.foto.isNotEmpty
-                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Icon(PhosphorIcons.image, size: 32, color: Colors.grey))
-                    : Icon(PhosphorIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
+                    ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.image, size: 32, color: Colors.grey))
+                    : Icon(AppIcons.package, size: 32, color: Theme.of(context).colorScheme.primary),
               ),
             ),
             Padding(
@@ -280,20 +299,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   Text(product.nama, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 4),
                   if (vendor != null)
-                    Text(vendor.namaToko, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)), maxLines: 1, overflow: TextOverflow.ellipsis),
+                    Text(vendor.namaToko, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)), maxLines: 1, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      Icon(PhosphorIcons.star, size: 12, color: Colors.amber),
+                      Icon(AppIcons.star, size: 12, color: Colors.amber),
                       const SizedBox(width: 2),
                       Text('${product.ratingRata}', style: Theme.of(context).textTheme.bodySmall),
                       const SizedBox(width: 8),
-                      Text('${product.totalReview} review', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                      Text('${product.totalReview} review', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    formatCurrency(product.hargaPerHari) + '/hari',
+                    '${formatCurrency(product.hargaPerHari)}/hari',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: Theme.of(context).colorScheme.primary,
@@ -325,7 +344,7 @@ class _CategoryCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Theme.of(context).colorScheme.primaryContainer, Theme.of(context).colorScheme.primary.withOpacity(0.1)],
+              colors: [Theme.of(context).colorScheme.primaryContainer, Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -333,7 +352,7 @@ class _CategoryCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(PhosphorIcons.package, size: 40, color: Theme.of(context).colorScheme.primary),
+              Icon(AppIcons.package, size: 40, color: Theme.of(context).colorScheme.primary),
               const SizedBox(height: 12),
               Text(name, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600), textAlign: TextAlign.center),
             ],

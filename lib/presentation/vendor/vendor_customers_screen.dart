@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class VendorCustomersScreen extends StatelessWidget {
   const VendorCustomersScreen({super.key});
@@ -12,7 +12,7 @@ class VendorCustomersScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.users(), size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.users, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Data Penyewa', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

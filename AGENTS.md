@@ -17,12 +17,12 @@
 | Layer | Technology |
 |-------|------------|
 | Framework | Flutter 3.13+ (Material 3) |
-| State Management | **Riverpod** (flutter_riverpod + riverpod_generator) |
+| State Management | **Riverpod 3** (flutter_riverpod + riverpod_generator) |
 | Routing | **GoRouter** (declarative, auth guards) |
 | Models | **Freezed** + **json_serializable** (immutable, union types) |
 | Local Storage | **Hive** + **SharedPreferences** |
 | Network/Utils | intl, timezone, image_picker, pdf, flutter_map (OSM) |
-| Icons | phosphor_flutter |
+| Icons | Phosphor via `AppIcons` (`lib/core/theme/app_icons.dart`, font dari phosphor_flutter) |
 
 ---
 
@@ -99,10 +99,10 @@ lib/
 flutter pub get
 
 # Generate Freezed / JSON serializable code
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 
 # Watch mode during development
-flutter pub run build_runner watch --delete-conflicting-outputs
+dart run build_runner watch
 
 # Run app
 flutter run
@@ -123,7 +123,7 @@ flutter build apk --release
 
 1. **Branch per feature**: `feature/booking-flow`, `feature/vendor-dashboard`, etc.
 2. **Commit convention**: `type(scope): message` — e.g., `feat(booking): add date picker validation`
-3. **Before PR**: `flutter analyze && flutter test && flutter pub run build_runner build`
+3. **Before PR**: `dart run build_runner build && flutter analyze && flutter test`
 4. **No direct push to main** — PR required (manual review)
 5. **Mock data changes**: Update `lib/data/mock/*.dart` + corresponding model if needed
 
@@ -150,6 +150,9 @@ flutter build apk --release
 - ❌ Jangan skip `build_runner` setelah ubah model Freezed
 - ❌ Jangan commit file `*.g.dart`, `*.freezed.dart` tanpa generate ulang
 - ❌ Jangan pakai `setState` di ConsumerWidget — pakai Riverpod state
+- ❌ Jangan `import 'package:phosphor_flutter/phosphor_flutter.dart'` — library Dart-nya tidak bisa dikompilasi di Flutter 3.47 (`IconData` sekarang `final class`). Pakai `AppIcons.<nama>`; ikon baru ditambahkan di `lib/core/theme/app_icons.dart`
+- ❌ Jangan tulis class Freezed tanpa `abstract`/`sealed` (wajib sejak Freezed 3): `abstract class X with _$X`
+- ❌ Jangan tulis aturan "role → halaman" di layar; pakai `homePathFor(user)` dari `core/auth/auth_state.dart`
 
 ---
 
@@ -214,12 +217,12 @@ Priority screens to build:
 
 ## 🐛 Known Issues / TODO
 
-- [ ] `build_runner` belum dijalankan (freezed/g.dart missing)
+- [x] `build_runner` sudah jalan (Freezed 4 + json_serializable, `build.yaml` → `field_rename: snake`)
 - [ ] `VendorRegisterScreen` belum simpan dokumen upload (mock only)
 - [ ] Haversine di `vendor_mock.dart` pakai `dart:math` — OK
 - [ ] Belum ada persist local storage untuk mock data (Hive/SharedPreferences)
 - [ ] Placeholder screens banyak — perlu implementasi bertahap
-- [ ] Test unit untuk utils (haversine, format, validation)
+- [ ] Test unit untuk format & validation utils (haversine, router guard, parsing JSON sudah ada di `test/`)
 
 ---
 

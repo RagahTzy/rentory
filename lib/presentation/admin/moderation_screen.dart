@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class ModerationScreen extends StatelessWidget {
   const ModerationScreen({super.key});
@@ -12,7 +12,7 @@ class ModerationScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.shield, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.shield, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Moderasi', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

@@ -1,7 +1,7 @@
 // lib/presentation/booking/booking_create_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/format_utils.dart';
 import '../../data/services/product_service.dart';
 
@@ -19,7 +19,7 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
   DateTime? _endDate;
   int _qty = 1;
   String _pickupOption = 'ambil_di_toko';
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +49,11 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
                     height: 60,
                     color: Theme.of(context).colorScheme.surfaceContainerHighest,
                     child: product.foto.isNotEmpty
-                        ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Icon(PhosphorIcons.package))
-                        : Icon(PhosphorIcons.package),
+                        ? Image.asset(product.foto.first, fit: BoxFit.cover, errorBuilder: (_, _, _) => Icon(AppIcons.package))
+                        : Icon(AppIcons.package),
                   ),
                   title: Text(product.nama, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-                  subtitle: Text(formatCurrency(product.hargaPerHari) + '/hari'),
+                  subtitle: Text('${formatCurrency(product.hargaPerHari)}/hari'),
                 ),
               ),
               const SizedBox(height: 24),
@@ -89,7 +89,7 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
                 children: [
                   IconButton(
                     onPressed: _qty > 1 ? () => setState(() => _qty--) : null,
-                    icon: const Icon(PhosphorIcons.minus),
+                    icon: const Icon(AppIcons.minus),
                     style: IconButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest),
                   ),
                   const SizedBox(width: 16),
@@ -97,11 +97,11 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
                   const SizedBox(width: 16),
                   IconButton(
                     onPressed: _qty < product.stok ? () => setState(() => _qty++) : null,
-                    icon: const Icon(PhosphorIcons.plus),
+                    icon: const Icon(AppIcons.plus),
                     style: IconButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest),
                   ),
                   const Spacer(),
-                  Text('Stok: ${product.stok}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+                  Text('Stok: ${product.stok}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6))),
                 ],
               ),
               const SizedBox(height: 24),
@@ -111,8 +111,8 @@ class _BookingCreateScreenState extends State<BookingCreateScreen> {
               const SizedBox(height: 12),
               SegmentedButton<String>(
                 segments: const [
-                  ButtonSegment(value: 'ambil_di_toko', label: Text('Ambil di Toko'), icon: Icon(PhosphorIcons.storefront)),
-                  ButtonSegment(value: 'diantar', label: Text('Diantar'), icon: Icon(PhosphorIcons.truck)),
+                  ButtonSegment(value: 'ambil_di_toko', label: Text('Ambil di Toko'), icon: Icon(AppIcons.storefront)),
+                  ButtonSegment(value: 'diantar', label: Text('Diantar'), icon: Icon(AppIcons.truck)),
                 ],
                 selected: {_pickupOption},
                 onSelectionChanged: (s) => setState(() => _pickupOption = s.first),
@@ -192,7 +192,7 @@ class _DateField extends StatelessWidget {
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: const Icon(PhosphorIcons.calendar),
+          prefixIcon: const Icon(AppIcons.calendar),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
         child: Text(value != null ? formatDate(value!) : 'Pilih tanggal'),

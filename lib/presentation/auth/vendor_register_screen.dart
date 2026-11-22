@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/validation_utils.dart';
 import '../../data/services/auth_service.dart';
+import '../../core/auth/auth_state.dart';
 import '../../data/mock/vendor_mock.dart';
 import '../../data/models/vendor.dart';
 
@@ -135,10 +136,10 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
 
       if (mounted) {
         ref.read(authStateProvider.notifier).setUser(user);
-        context.go('/vendor/pending');
+        context.go(homePathFor(user));
       }
     } catch (e) {
-      setState(() => _errorMessage = e.toString());
+      if (mounted) setState(() => _errorMessage = e.toString());
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -166,7 +167,7 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                 Text(
                   'Isi data diri dan toko Anda. Akun akan diverifikasi admin.',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -184,25 +185,25 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                   ),
 
                 // === DATA DIRI ===
-                _sectionTitle('Data Diri', PhosphorIcons.user),
+                _sectionTitle('Data Diri', AppIcons.user),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Nama Lengkap', prefixIcon: Icon(PhosphorIcons.user)),
+                  decoration: const InputDecoration(labelText: 'Nama Lengkap', prefixIcon: Icon(AppIcons.user)),
                   validator: (v) => validateRequired(v, 'Nama'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(PhosphorIcons.envelope)),
+                  decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(AppIcons.envelope)),
                   validator: validateEmail,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(labelText: 'Nomor HP', prefixIcon: Icon(PhosphorIcons.phone)),
+                  decoration: const InputDecoration(labelText: 'Nomor HP', prefixIcon: Icon(AppIcons.phone)),
                   validator: validatePhone,
                 ),
                 const SizedBox(height: 12),
@@ -211,9 +212,9 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    prefixIcon: const Icon(PhosphorIcons.lock),
+                    prefixIcon: const Icon(AppIcons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? PhosphorIcons.eye : PhosphorIcons.eyeSlash),
+                      icon: Icon(_obscurePassword ? AppIcons.eye : AppIcons.eyeSlash),
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
@@ -225,9 +226,9 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                   obscureText: _obscureConfirm,
                   decoration: InputDecoration(
                     labelText: 'Konfirmasi Password',
-                    prefixIcon: const Icon(PhosphorIcons.lock),
+                    prefixIcon: const Icon(AppIcons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirm ? PhosphorIcons.eye : PhosphorIcons.eyeSlash),
+                      icon: Icon(_obscureConfirm ? AppIcons.eye : AppIcons.eyeSlash),
                       onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
                     ),
                   ),
@@ -235,30 +236,30 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                 ),
 
                 const SizedBox(height: 24),
-                _sectionTitle('Data Toko', PhosphorIcons.storefront),
+                _sectionTitle('Data Toko', AppIcons.storefront),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _storeNameController,
-                  decoration: const InputDecoration(labelText: 'Nama Toko', prefixIcon: Icon(PhosphorIcons.sign)),
+                  decoration: const InputDecoration(labelText: 'Nama Toko', prefixIcon: Icon(AppIcons.storefront)),
                   validator: (v) => validateRequired(v, 'Nama Toko'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _storeDescController,
                   maxLines: 3,
-                  decoration: const InputDecoration(labelText: 'Deskripsi Toko', prefixIcon: Icon(PhosphorIcons.textT)),
+                  decoration: const InputDecoration(labelText: 'Deskripsi Toko', prefixIcon: Icon(AppIcons.textT)),
                   validator: (v) => validateRequired(v, 'Deskripsi'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _addressController,
-                  decoration: const InputDecoration(labelText: 'Alamat Lengkap', prefixIcon: Icon(PhosphorIcons.mapPin)),
+                  decoration: const InputDecoration(labelText: 'Alamat Lengkap', prefixIcon: Icon(AppIcons.mapPin)),
                   validator: (v) => validateRequired(v, 'Alamat'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _cityController,
-                  decoration: const InputDecoration(labelText: 'Kota', prefixIcon: Icon(PhosphorIcons.buildings)),
+                  decoration: const InputDecoration(labelText: 'Kota', prefixIcon: Icon(AppIcons.buildings)),
                   validator: (v) => validateRequired(v, 'Kota'),
                 ),
                 const SizedBox(height: 12),
@@ -268,7 +269,7 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                       child: TextFormField(
                         controller: _latController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'Latitude', prefixIcon: Icon(PhosphorIcons.mapPinLine)),
+                        decoration: const InputDecoration(labelText: 'Latitude', prefixIcon: Icon(AppIcons.mapPinLine)),
                         validator: (v) => validateCoordinate(v, isLatitude: true),
                       ),
                     ),
@@ -277,7 +278,7 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                       child: TextFormField(
                         controller: _lngController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'Longitude', prefixIcon: Icon(PhosphorIcons.mapPinLine)),
+                        decoration: const InputDecoration(labelText: 'Longitude', prefixIcon: Icon(AppIcons.mapPinLine)),
                         validator: (v) => validateCoordinate(v, isLatitude: false),
                       ),
                     ),
@@ -287,51 +288,51 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                 TextFormField(
                   controller: _contactController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(labelText: 'Kontak Toko (WA/Telepon)', prefixIcon: Icon(PhosphorIcons.phone)),
+                  decoration: const InputDecoration(labelText: 'Kontak Toko (WA/Telepon)', prefixIcon: Icon(AppIcons.phone)),
                   validator: (v) => validateRequired(v, 'Kontak'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _hoursController,
-                  decoration: const InputDecoration(labelText: 'Jam Operasional', hintText: '09:00-21:00', prefixIcon: Icon(PhosphorIcons.clock)),
+                  decoration: const InputDecoration(labelText: 'Jam Operasional', hintText: '09:00-21:00', prefixIcon: Icon(AppIcons.clock)),
                 ),
 
                 const SizedBox(height: 24),
-                _sectionTitle('Rekening Usaha (Wajib)', PhosphorIcons.bank),
+                _sectionTitle('Rekening Usaha (Wajib)', AppIcons.bank),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _bankController,
-                  decoration: const InputDecoration(labelText: 'Nama Bank', prefixIcon: Icon(PhosphorIcons.building)),
+                  decoration: const InputDecoration(labelText: 'Nama Bank', prefixIcon: Icon(AppIcons.building)),
                   validator: (v) => validateRequired(v, 'Bank'),
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _accountNumberController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Nomor Rekening', prefixIcon: Icon(PhosphorIcons.hash)),
+                  decoration: const InputDecoration(labelText: 'Nomor Rekening', prefixIcon: Icon(AppIcons.hash)),
                   validator: validateBankAccount,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _accountNameController,
-                  decoration: const InputDecoration(labelText: 'Atas Nama', prefixIcon: Icon(PhosphorIcons.user)),
+                  decoration: const InputDecoration(labelText: 'Atas Nama', prefixIcon: Icon(AppIcons.user)),
                   validator: (v) => validateRequired(v, 'Atas Nama'),
                 ),
 
                 const SizedBox(height: 24),
-                _sectionTitle('Kebijakan Toko', PhosphorIcons.gear),
+                _sectionTitle('Kebijakan Toko', AppIcons.gear),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _lateFeeController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Tarif Denda per Hari (Rp)', prefixIcon: Icon(PhosphorIcons.currencyCircleDollar)),
+                  decoration: const InputDecoration(labelText: 'Tarif Denda per Hari (Rp)', prefixIcon: Icon(AppIcons.currencyCircleDollar)),
                   validator: validatePrice,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _depositPercentController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Persen Deposit (%)', prefixIcon: Icon(PhosphorIcons.percent)),
+                  decoration: const InputDecoration(labelText: 'Persen Deposit (%)', prefixIcon: Icon(AppIcons.percent)),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Wajib diisi';
                     final n = int.tryParse(v);
@@ -343,32 +344,32 @@ class _VendorRegisterScreenState extends ConsumerState<VendorRegisterScreen> {
                 TextFormField(
                   controller: _cancelPolicyController,
                   maxLines: 2,
-                  decoration: const InputDecoration(labelText: 'Kebijakan Pembatalan', prefixIcon: Icon(PhosphorIcons.note)),
+                  decoration: const InputDecoration(labelText: 'Kebijakan Pembatalan', prefixIcon: Icon(AppIcons.note)),
                 ),
 
                 const SizedBox(height: 24),
-                _sectionTitle('Opsi Pengambilan & Antar', PhosphorIcons.truck),
+                _sectionTitle('Opsi Pengambilan & Antar', AppIcons.truck),
                 const SizedBox(height: 12),
                 SwitchListTile(
                   title: const Text('Tersedia Jasa Antar'),
                   subtitle: const Text('Penyewa bisa meminta barang diantar'),
                   value: _offerDelivery,
                   onChanged: (v) => setState(() => _offerDelivery = v),
-                  secondary: Icon(_offerDelivery ? PhosphorIcons.truck : PhosphorIcons.truck, color: _offerDelivery ? null : Colors.grey),
+                  secondary: Icon(_offerDelivery ? AppIcons.truck : AppIcons.truck, color: _offerDelivery ? null : Colors.grey),
                 ),
                 if (_offerDelivery) ...[
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _deliveryFeeController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Biaya Antar per KM (Rp)', prefixIcon: Icon(PhosphorIcons.currencyCircleDollar)),
+                    decoration: const InputDecoration(labelText: 'Biaya Antar per KM (Rp)', prefixIcon: Icon(AppIcons.currencyCircleDollar)),
                     validator: validatePrice,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _deliveryRadiusController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Radius Maksimal Antar (KM)', prefixIcon: Icon(PhosphorIcons.mapPin)),
+                    decoration: const InputDecoration(labelText: 'Radius Maksimal Antar (KM)', prefixIcon: Icon(AppIcons.mapPin)),
                     validator: (v) => validatePrice(v),
                   ),
                 ],

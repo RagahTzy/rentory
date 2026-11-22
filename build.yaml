@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Data dummy (users.json, products.json, categories.json) memakai
+          # snake_case (vendor_id, harga_per_hari, ...), sedangkan field model
+          # Dart memakai camelCase (vendorId, hargaPerHari, ...).
+          field_rename: snake

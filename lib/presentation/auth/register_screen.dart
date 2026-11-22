@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/validation_utils.dart';
 import '../../data/services/auth_service.dart';
+import '../../core/auth/auth_state.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -53,16 +54,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         role: role,
       );
 
+      if (!mounted) return;
       if (user != null) {
         ref.read(authStateProvider.notifier).setUser(user);
-        if (role == AppConstants.rolePengusaha) {
-          context.go('/vendor/pending');
-        } else {
-          context.go('/home');
-        }
+        context.go(homePathFor(user));
       }
     } catch (e) {
-      setState(() => _errorMessage = e.toString());
+      if (mounted) setState(() => _errorMessage = e.toString());
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -90,7 +88,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 Text(
                   'Isi data di bawah untuk mendaftar',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -113,7 +111,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Nama Lengkap',
                     hintText: 'Masukkan nama lengkap',
-                    prefixIcon: Icon(PhosphorIcons.user),
+                    prefixIcon: Icon(AppIcons.user),
                   ),
                   validator: (v) => validateRequired(v, 'Nama'),
                 ),
@@ -126,7 +124,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     hintText: 'contoh@email.com',
-                    prefixIcon: Icon(PhosphorIcons.envelope),
+                    prefixIcon: Icon(AppIcons.envelope),
                   ),
                   validator: validateEmail,
                 ),
@@ -139,7 +137,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   decoration: const InputDecoration(
                     labelText: 'Nomor HP',
                     hintText: '08xxxxxxxxxx',
-                    prefixIcon: Icon(PhosphorIcons.phone),
+                    prefixIcon: Icon(AppIcons.phone),
                   ),
                   validator: validatePhone,
                 ),
@@ -152,9 +150,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Minimal 6 karakter',
-                    prefixIcon: const Icon(PhosphorIcons.lock),
+                    prefixIcon: const Icon(AppIcons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? PhosphorIcons.eye : PhosphorIcons.eyeSlash),
+                      icon: Icon(_obscurePassword ? AppIcons.eye : AppIcons.eyeSlash),
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
@@ -168,9 +166,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
                     labelText: 'Konfirmasi Password',
-                    prefixIcon: const Icon(PhosphorIcons.lock),
+                    prefixIcon: const Icon(AppIcons.lock),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirm ? PhosphorIcons.eye : PhosphorIcons.eyeSlash),
+                      icon: Icon(_obscureConfirm ? AppIcons.eye : AppIcons.eyeSlash),
                       onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
                     ),
                   ),
@@ -198,7 +196,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   children: [
                     Text(
                       'Sudah punya akun? ',
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
                     ),
                     TextButton(
                       onPressed: () => context.go('/auth/login'),

@@ -1,4 +1,5 @@
 // lib/core/routing/app_router.dart
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../presentation/auth/login_screen.dart';
@@ -43,46 +44,56 @@ import '../../presentation/chat/chat_list_screen.dart';
 import '../../presentation/chat/chat_room_screen.dart';
 import '../../presentation/notifications/notification_screen.dart';
 import '../../presentation/shared/splash_screen.dart';
-import '../../data/services/auth_service.dart';
-import '../../data/models/user.dart';
 import '../auth/auth_state.dart';
+import '../constants/app_constants.dart';
+
+const _vendorPendingPath = '/vendor/pending';
+
+/// Guard navigasi. Dipisah dari GoRouter supaya mudah dibaca & dites.
+String? authRedirect(AuthState authState, String location) {
+  // Splash menentukan tujuan awalnya sendiri.
+  if (location == '/splash') return null;
+
+  final isAuthRoute = location.startsWith('/auth');
+
+  if (authState is! Authenticated) {
+    return isAuthRoute ? null : '/auth/login';
+  }
+
+  final user = authState.user;
+  final home = homePathFor(user);
+
+  if (isAuthRoute) return home;
+
+  final isVendor = user.role == AppConstants.rolePengusaha;
+  final isVendorVerified = isVendor && user.status == AppConstants.statusAktif;
+
+  // /vendor/pending hanya untuk pengusaha yang BELUM terverifikasi.
+  // Dicek terpisah dari route /vendor/* lain agar tidak terjadi loop redirect.
+  if (location == _vendorPendingPath) {
+    return (isVendor && !isVendorVerified) ? null : home;
+  }
+
+  if (location.startsWith('/vendor') && !isVendorVerified) return home;
+
+  if (location.startsWith('/admin') && user.role != AppConstants.roleAdmin) return home;
+
+  return null;
+}
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateProvider);
+  // GoRouter dibuat SEKALI. Perubahan login cukup memicu evaluasi ulang
+  // redirect lewat refreshListenable (bukan membuat GoRouter baru, yang
+  // dulu membuat navigasi ter-reset ke /splash setiap kali login).
+  final authRefresh = ValueNotifier<AuthState>(ref.read(authStateProvider));
+  ref.listen<AuthState>(authStateProvider, (_, next) => authRefresh.value = next);
+  ref.onDispose(authRefresh.dispose);
 
-  return GoRouter(
+  final router = GoRouter(
     initialLocation: '/splash',
     debugLogDiagnostics: true,
-    redirect: (context, state) {
-      final isLoggedIn = authState is Authenticated;
-      final userRole = isLoggedIn ? (authState as Authenticated).user.role : null;
-      final isVendor = isLoggedIn && userRole == 'pengusaha';
-      final isAdmin = isLoggedIn && userRole == 'admin';
-      final isVendorVerified = isVendor && (authState as Authenticated).user.status == 'aktif';
-
-      final location = state.matchedLocation;
-      final isAuthRoute = location.startsWith('/auth');
-      final isVendorRoute = location.startsWith('/vendor');
-      final isAdminRoute = location.startsWith('/admin');
-
-      if (!isLoggedIn && !isAuthRoute && location != '/splash') {
-        return '/auth/login';
-      }
-
-      if (isLoggedIn && isAuthRoute) {
-        return isVendor ? '/vendor/dashboard' : '/home';
-      }
-
-      if (isVendorRoute && (!isVendor || !isVendorVerified)) {
-        return isVendor ? '/vendor/pending' : '/home';
-      }
-
-      if (isAdminRoute && !isAdmin) {
-        return '/home';
-      }
-
-      return null;
-    },
+    refreshListenable: authRefresh,
+    redirect: (context, state) => authRedirect(authRefresh.value, state.matchedLocation),
     routes: [
       GoRoute(
         path: '/splash',
@@ -260,4 +271,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
+  ref.onDispose(router.dispose);
+  return router;
 });

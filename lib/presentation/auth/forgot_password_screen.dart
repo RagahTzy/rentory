@@ -1,7 +1,7 @@
 // lib/presentation/auth/forgot_password_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 import '../../core/utils/validation_utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -55,7 +55,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         children: [
           const SizedBox(height: 40),
           Icon(
-            PhosphorIcons.lockKeyOpen,
+            AppIcons.lockKeyOpen,
             size: 64,
             color: Theme.of(context).colorScheme.primary,
           ),
@@ -69,7 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           Text(
             'Masukkan email Anda, kami akan kirim link reset password',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -82,7 +82,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             decoration: const InputDecoration(
               labelText: 'Email',
               hintText: 'contoh@email.com',
-              prefixIcon: Icon(PhosphorIcons.envelope),
+              prefixIcon: Icon(AppIcons.envelope),
             ),
             validator: validateEmail,
             onFieldSubmitted: (_) => _handleSubmit(),
@@ -113,10 +113,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.green.withOpacity(0.1),
+            color: Colors.green.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(PhosphorIcons.checkCircle, size: 64, color: Colors.green),
+          child: Icon(AppIcons.checkCircle, size: 64, color: Colors.green),
         ),
         const SizedBox(height: 24),
         Text(
@@ -128,7 +128,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Text(
           'Cek inbox email ${_emailController.text} untuk link reset password.\nLink berlaku selama 1 jam.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
           ),
           textAlign: TextAlign.center,
         ),

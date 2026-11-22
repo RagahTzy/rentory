@@ -5,7 +5,7 @@ part 'others.freezed.dart';
 part 'others.g.dart';
 
 @freezed
-class Review with _$Review {
+abstract class Review with _$Review {
   const factory Review({
     required String id,
     required String rentalId,
@@ -23,7 +23,7 @@ class Review with _$Review {
 }
 
 @freezed
-class VendorBlacklist with _$VendorBlacklist {
+abstract class VendorBlacklist with _$VendorBlacklist {
   const factory VendorBlacklist({
     required String id,
     required String vendorId,
@@ -36,7 +36,7 @@ class VendorBlacklist with _$VendorBlacklist {
 }
 
 @freezed
-class Message with _$Message {
+abstract class Message with _$Message {
   const factory Message({
     required String id,
     required String pengirimId,
@@ -52,7 +52,7 @@ class Message with _$Message {
 }
 
 @freezed
-class Maintenance with _$Maintenance {
+abstract class Maintenance with _$Maintenance {
   const factory Maintenance({
     required String id,
     required String itemId,
@@ -68,7 +68,7 @@ class Maintenance with _$Maintenance {
 }
 
 @freezed
-class Dispute with _$Dispute {
+abstract class Dispute with _$Dispute {
   const factory Dispute({
     required String id,
     required String rentalId,
@@ -85,7 +85,7 @@ class Dispute with _$Dispute {
 }
 
 @freezed
-class Notification with _$Notification {
+abstract class Notification with _$Notification {
   const factory Notification({
     required String id,
     required String userId,
@@ -101,7 +101,7 @@ class Notification with _$Notification {
 }
 
 @freezed
-class VendorDocument with _$VendorDocument {
+abstract class VendorDocument with _$VendorDocument {
   const factory VendorDocument({
     required String id,
     required String vendorId,

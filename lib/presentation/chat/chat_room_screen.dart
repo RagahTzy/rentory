@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:rentory/core/theme/app_icons.dart';
 
 class ChatRoomScreen extends StatelessWidget {
   final String chatKey;
@@ -14,7 +14,7 @@ class ChatRoomScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.chatCircle, size: 64, color: Colors.grey.shade400),
+            Icon(AppIcons.chatCircle, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text('Chat Room', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),

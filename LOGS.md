@@ -85,6 +85,22 @@ flutter pub run build_runner build --delete-conflicting-outputs  # Success
 
 ---
 
+## 2026-11-23 — Fix build & runtime (Flutter 3.47.5 / Dart 3.13)
+
+| Phase | Task | Description | Status |
+|-------|------|-------------|--------|
+| 0 | Upgrade deps | Semua paket ke versi mayor terbaru (freezed 4, freezed_annotation 3, riverpod 3, go_router 18, intl 0.20, flutter_map 8, dst). `hive_generator` (discontinued, tidak dipakai) dikeluarkan karena mengunci analyzer lama. + `cupertino_icons` (dibutuhkan cupertino_ui dari go_router 18) | ✅ Done |
+| 0 | Freezed 4 | Kode lama hasil freezed 2 memakai `final` di parameter konstruktor (ilegal sejak Dart 3.13). Model jadi `abstract class`, regenerate. `AuthState` duplikat di `user.dart` dihapus | ✅ Done |
+| 0 | JSON snake_case | `build.yaml` → `field_rename: snake`; dulu `User.fromJson` crash (no_hp vs noHp) → app crash sebelum `runApp` | ✅ Done |
+| 0 | Ikon | `phosphor_flutter` 2.1.0 tidak bisa dikompilasi (IconData final). Diganti `AppIcons` (const IconData, font Phosphor yang sama). 3 nama ikon tidak valid diperbaiki | ✅ Done |
+| 1 | Router | GoRouter dibuat sekali + `refreshListenable` (dulu reset ke splash tiap login); redirect tanpa loop `/vendor/pending`; admin → `/admin/dashboard`; `homePathFor()` | ✅ Done |
+| 1 | Auth | `StateNotifier` → `Notifier` (Riverpod 3); vendor `menunggu_verifikasi` bisa login → `/vendor/pending`; cek `mounted` setelah `await` | ✅ Done |
+| 2 | UI | Overflow kartu "Toko Terdekat" & tombol "Tanya" di HP 360px; sort "Terdekat" + radius di search diimplementasi; search tidak lagi menampilkan barang non-tersedia | ✅ Done |
+| - | Tests | `test/`: router guard (anti-loop), parsing JSON dummy, alur splash→login→dashboard, smoke test layar di 800x600 & 360x740 | ✅ 16 passed |
+| - | Verify | `flutter analyze` → No issues; `flutter build web` → OK. Android belum diverifikasi (Android SDK tidak terpasang di mesin ini) | ✅ Done |
+
+---
+
 ## 2025-11-23 (Planned)
 
 | Phase | Task | Description | Status |

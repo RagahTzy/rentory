@@ -99,13 +99,13 @@ cd rentory
 flutter pub get
 
 # Generate Freezed & JSON serializable code
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 
 # Run app (debug)
 flutter run
 
 # Atau watch mode saat development
-flutter pub run build_runner watch --delete-conflicting-outputs
+dart run build_runner watch
 ```
 
 ---

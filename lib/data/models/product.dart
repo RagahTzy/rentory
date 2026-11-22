@@ -5,7 +5,7 @@ part 'product.freezed.dart';
 part 'product.g.dart';
 
 @freezed
-class Product with _$Product {
+abstract class Product with _$Product {
   const factory Product({
     required String id,
     required String vendorId,
@@ -28,7 +28,7 @@ class Product with _$Product {
 }
 
 @freezed
-class Category with _$Category {
+abstract class Category with _$Category {
   const factory Category({
     required String id,
     required String nama,
